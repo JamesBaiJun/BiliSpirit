@@ -1,0 +1,33 @@
+﻿<Window x:Class="BiliSpirit.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BiliSpirit"
+        mc:Ignorable="d"
+        Title="MainWindow"
+        Height="390" 
+        Width="220" 
+        ResizeMode="NoResize" 
+        WindowStyle="None" 
+        WindowStartupLocation="CenterScreen" 
+        Loaded="Window_Loaded" 
+        BorderBrush="Gray" 
+        UseLayoutRounding="True"
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        BorderThickness="1">
+    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Source="Images/bilibili.png" Width="100" Margin="0 0 0 20" RenderOptions.BitmapScalingMode="Fant"/>
+            <TextBlock Text="请扫描二维码登录" HorizontalAlignment="Center" FontSize="14" 
+                       Foreground="{StaticResource PrimaryPinkColor}"/>
+
+            <Image x:Name="QrImage" Width="150" Height="150"/>
+
+            <icon:PackIconMaterial Kind="Refresh" Background="Transparent" MouseDown="PackIconMaterial_MouseDown" 
+                                   HorizontalAlignment="Center"  Foreground="{StaticResource PrimaryPinkColor}"/>
+
+            <Button Width="80" Click="Button_Click" Height="30"/>
+        </StackPanel>
+    </Grid>
+</Window>
