@@ -22,6 +22,7 @@ namespace BiliSpirit
         public ShellWindow()
         {
             InitializeComponent();
+            Closed += (s, e) => { Application.Current.Shutdown(); };
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

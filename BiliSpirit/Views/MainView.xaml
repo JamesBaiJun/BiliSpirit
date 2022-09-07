@@ -9,7 +9,7 @@
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
              d:DesignHeight="450" Loaded="{DXEvent Handler='Loaded()'}" d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
-    <Grid>
+    <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -17,7 +17,7 @@
         <Grid Height="80" Margin="8" ShowGridLines="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition Width="0.7*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid>
@@ -38,8 +38,8 @@
                                DockPanel.Dock="Top" Foreground="{StaticResource PrimaryPinkColor}"/>
 
                 <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
-                            Padding="4 2 4 4" Margin="8 12 8 8" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="8" 
+                            Padding="4 2 4 4" Margin="8" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="10" 
                             Foreground="{StaticResource PrimaryGrayColor}"/>
                 </Border>
             </StackPanel>
@@ -48,29 +48,23 @@
                 <TextBlock Text="硬币" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
                 <TextBlock Text="粉丝" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
                 <TextBlock Text="经验" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding LoginUser.data.coins}" FontSize="16" HorizontalAlignment="Center" Margin="0 4"/>
-                <TextBlock Text="{Binding LoginUser.data.follower}" FontSize="16" HorizontalAlignment="Center" Margin="0 4"/>
-                <ProgressBar Maximum="{Binding LoginUser.data.level_exp.next_exp}" Height="5" Margin="0 12 0 0"
-                             VerticalAlignment="Top" BorderThickness="0" Style="{x:Null}" Value="{Binding LoginUser.data.level_exp.current_exp}" Foreground="{StaticResource PrimaryPinkColor}"/>
+                <TextBlock Text="{Binding LoginUser.data.coins}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                <TextBlock Text="{Binding LoginUser.data.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                <ProgressBar Maximum="{Binding LoginUser.data.level_exp.next_exp}" Height="5"
+                             VerticalAlignment="Center" BorderThickness="0" Margin="0 2 0 0" Style="{x:Null}" Value="{Binding LoginUser.data.level_exp.current_exp}" 
+                             Foreground="{StaticResource PrimaryPinkColor}"/>
             </UniformGrid>
-
-            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="22">
-                <Button Command="{Binding RefreshContentCommand}" Style="{StaticResource IconButton}">
-                    <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
-                </Button>
-            </StackPanel>
         </Grid>
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Line VerticalAlignment="Bottom" Margin="-1 0 -1 4" X1="0" Y1="0" X2="1" Y2="0" StrokeThickness="1" Stretch="Fill" Stroke="{StaticResource PrimaryPinkColor}" />
+            <Line VerticalAlignment="Bottom" Margin="0 0 0 4" X1="0" Y1="0" X2="1" Y2="0" StrokeThickness="1" Stretch="Fill" Stroke="{StaticResource PrimaryPinkColor}" />
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <StackPanel.Resources>
                     <Style TargetType="RadioButton">
-                        <Setter Property="Margin" Value="0 0 0 -2"/>
                         <Setter Property="Foreground" Value="{StaticResource PrimaryPinkColor}"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -80,13 +74,31 @@
                                             <RowDefinition/>
                                             <RowDefinition Height="2"/>
                                         </Grid.RowDefinitions>
-                                        <ContentPresenter Margin="12 0 12 4"/>
-                                        <Rectangle x:Name="check" Stretch="Fill" Margin="0 0 0 -3" Grid.Row="1" Fill="{StaticResource PrimaryPinkColor}"/>
+                                        <ContentPresenter Margin="16 0 16 0"/>
+                                        <Rectangle x:Name="check" Stretch="Fill" RenderTransformOrigin="0.5,0.5" Margin="0 0 0 0" Grid.Row="1" Fill="{StaticResource PrimaryPinkColor}">
+                                            <Rectangle.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                </TransformGroup>
+                                            </Rectangle.RenderTransform>
+                                        </Rectangle>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsChecked" Value="True">
                                             <Setter Property="Visibility" TargetName="check" Value="Visible"/>
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation Duration="0:0:0.15" From="0" To="1" Storyboard.TargetName="check" Storyboard.TargetProperty="RenderTransform.Children[0].ScaleX">
+                                                            <DoubleAnimation.EasingFunction>
+                                                                <CubicEase EasingMode="EaseOut"/>
+                                                            </DoubleAnimation.EasingFunction>
+                                                        </DoubleAnimation>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
                                         </Trigger>
+
                                         <Trigger Property="IsChecked" Value="False">
                                             <Setter Property="Visibility" TargetName="check" Value="Collapsed"/>
                                         </Trigger>
@@ -102,10 +114,10 @@
                         <TextBlock Text="热门" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="dynaRad">
+                <RadioButton x:Name="liveRad">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Fan" Width="12"/>
-                        <TextBlock Text="动态" Margin="4 0 0 0"/>
+                        <TextBlock Text="直播" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
                 <RadioButton x:Name="hisRad">
@@ -114,13 +126,23 @@
                         <TextBlock Text="历史" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
+
             </StackPanel>
 
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" Height="22">
+                <Button Command="{Binding RefreshContentCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
+                    <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
+                </Button>
+            </StackPanel>
+            
             <ScrollViewer Grid.Row="1" CanContentScroll="False" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
                 <Grid>
                     <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}"/>
 
+                    <ItemsControl Visibility="{Binding ElementName=liveRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
+                              Margin="4" ItemsSource="{Binding LiveList}" ItemTemplate="{StaticResource LiveTemplate}"/>
+                    
                     <ItemsControl Visibility="{Binding ElementName=hisRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}"/>
                 </Grid>

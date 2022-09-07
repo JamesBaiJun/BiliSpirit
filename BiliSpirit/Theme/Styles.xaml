@@ -6,6 +6,7 @@
     <SolidColorBrush x:Key="PrimaryGrayColor" Color="#F4F4F4"/>
     <SolidColorBrush x:Key="PrimaryTextGrayColor" Color="#70848484"/>
     <SolidColorBrush x:Key="MaskColor" Color="#6323ADE5"/>
+    <SolidColorBrush x:Key="FontPrimary" Color="#E4000000"/>
 
     <converter:HisCoverConverter x:Key="converterHis"/>
     <Style x:Key="IconButton" TargetType="Button">
@@ -116,6 +117,55 @@
         </DataTemplate.Triggers>
     </DataTemplate>
 
+
+    <DataTemplate x:Key="LiveTemplate">
+        <Border x:Name="bd" Background="Transparent" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToLive(@sender.DataContext)'}">
+            <Grid Margin="4 6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+
+                <Image Source="{Binding cover}" RenderOptions.BitmapScalingMode="Fant">
+                    <Image.Clip>
+                        <EllipseGeometry Center="40,40" RadiusX="38" RadiusY="38"/>
+                    </Image.Clip>
+                </Image>
+                <Image Grid.Column="2" Source="{Binding pic}" RenderOptions.BitmapScalingMode="Fant"/>
+
+                <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
+                                       VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>
+                <Grid Grid.Column="1" Margin="4 2 0 2">
+                    <DockPanel LastChildFill="False">
+                        <TextBlock x:Name="title" Text="{Binding title}" MaxHeight="44" TextTrimming="WordEllipsis" DockPanel.Dock="Top" FontSize="14" Margin="4 0" TextWrapping="Wrap"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="4 0" DockPanel.Dock="Bottom">
+                            <icon:PackIconMaterial Kind="Account" Height="12" Width="12" Foreground="{StaticResource PrimaryTextGrayColor}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding uname}" TextWrapping="Wrap"  Margin="4 0 0 0" Foreground="{StaticResource PrimaryTextGrayColor}"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="4 0">
+                            <icon:PackIconMaterial Kind="Home" Height="14" Width="14" Foreground="{StaticResource PrimaryTextGrayColor}" VerticalAlignment="Center"/>
+                            <TextBlock Text="{Binding roomid}" Margin="4 0 0 0" VerticalAlignment="Center" Foreground="{StaticResource PrimaryTextGrayColor}"/>
+                        </StackPanel>
+                    </DockPanel>
+                </Grid>
+            </Grid>
+        </Border>
+
+        <DataTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}" TargetName="title"/>
+                <!--<Setter Property="FontWeight" Value="Bold" TargetName="title"/>-->
+                <Setter Property="Visibility" Value="Visible" TargetName="play"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="False">
+                <Setter Property="Visibility" Value="Collapsed" TargetName="play"/>
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    
     <!--#region 滚动条 -->
     <!-- ScrollViewer 滚动条 -->
     <Style x:Key="ScrollBarThumb"  TargetType="{x:Type Thumb}">

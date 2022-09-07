@@ -8,10 +8,13 @@
         Title="ShellWindow" Height="800" Width="400" 
         xmlns:view="clr-namespace:BiliSpirit.Views"
         FontFamily="{StaticResource YuanTi}"
+        TextElement.Foreground="{StaticResource FontPrimary}"
+        UseLayoutRounding="True"
+        Icon=".\icon.ico"
         ResizeMode="NoResize" Background="Transparent" 
         AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Border Margin="8 4 8 8" CornerRadius="4" Background="White" BorderBrush="{StaticResource PrimaryPinkColor}" BorderThickness="1">
+        <Border Margin="8 4 8 8" CornerRadius="4" Background="White" BorderBrush="{StaticResource PrimaryPinkColor}" BorderThickness="0">
             <Border.Effect>
                 <DropShadowEffect Color="#777777" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>

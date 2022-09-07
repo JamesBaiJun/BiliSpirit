@@ -14,6 +14,7 @@
         BorderBrush="Gray" 
         UseLayoutRounding="True"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        Icon=".\icon.ico"
         BorderThickness="1">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -26,7 +27,7 @@
             <icon:PackIconMaterial Kind="Refresh" Background="Transparent" MouseDown="PackIconMaterial_MouseDown" 
                                    HorizontalAlignment="Center"  Foreground="{StaticResource PrimaryPinkColor}"/>
 
-            <Button Width="80" Click="Button_Click" Height="30"/>
+            <!--<Button Width="80" Click="Button_Click" Height="30"/>-->
         </StackPanel>
     </Grid>
 </Window>

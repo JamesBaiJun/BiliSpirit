@@ -5,9 +5,13 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWPF>true</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="ResourceHanRoundedCN-Medium.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\bilibili.png" />
