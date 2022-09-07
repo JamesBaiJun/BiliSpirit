@@ -4,6 +4,16 @@
              xmlns:local="clr-namespace:BiliSpirit"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="Theme/Styles.xaml"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Theme/Styles.xaml"/>
+                <ResourceDictionary>
+                    <FontFamily x:Key="YuanTi">
+                        pack://application:,,,/#Resource Han Rounded CN Medium
+                    </FontFamily>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
     </Application.Resources>
 </Application>

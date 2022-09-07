@@ -1,10 +1,12 @@
 ﻿using BiliSpirit.Common;
+using BiliSpirit.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,17 +30,31 @@ namespace BiliSpirit
         public MainWindow()
         {
             InitializeComponent();
+            Login();
         }
 
-        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        private async void Login()
         {
-            await GetQrCode();
+            var info = await WebApiRequest.WebApiGetAsync("http://api.bilibili.com/x/space/myinfo");
+            if (JsonHelper.GetJsonValue(info, "code") == "0")
+            {
+                SoftwareCache.LoginUser = JsonConvert.DeserializeObject<LoginUser>(info);
+                ShellWindow shellWindow = new ShellWindow();
+                shellWindow.Show();
+                Application.Current.MainWindow = shellWindow;
+
+                this.Hide();
+            }
+            else // 登录信息获取失败
+            {
+                await GetQrCode();
+            }
         }
 
         string qrcode_key = string.Empty;
         private async Task GetQrCode()
         {
-            string str = await ApiRequest.WebApiGetAsync("http://passport.bilibili.com/x/passport-login/web/qrcode/generate");
+            string str = await WebApiRequest.WebApiGetAsync("http://passport.bilibili.com/x/passport-login/web/qrcode/generate");
 
             string url = JsonHelper.GetJsonValue(str, "url");
             qrcode_key = JsonHelper.GetJsonValue(str, "qrcode_key");
@@ -56,18 +72,17 @@ namespace BiliSpirit
             await GetQrCode();
         }
 
-        public async Task VerifyLogin()
+        public async Task<bool> VerifyLogin()
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
             data["qrcode_key"] = qrcode_key;
-            string str = await ApiRequest.WebApiGetAsync("http://passport.bilibili.com/x/passport-login/web/qrcode/poll", data);
+            string str = await WebApiRequest.WebApiGetAsync("http://passport.bilibili.com/x/passport-login/web/qrcode/poll", data);
             string code = JsonHelper.GetJsonValue(str, "code");
 
             switch (code)
             {
                 case "0": // 扫码登录成功
-                    SoftwareCache.Cookie = JsonHelper.GetJsonValue(str, "url").Split('&')[3];
-                    break;
+                    return true;
                 case "86038":// 二维码已失效
                     await GetQrCode();
                     break;
@@ -78,13 +93,13 @@ namespace BiliSpirit
                 default:
                     break;
             }
+
+            return false;
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             await VerifyLogin();
-
-            var info = await ApiRequest.WebApiGetAsync("http://api.bilibili.com/x/web-interface/card", SoftwareCache.Cookie);
         }
     }
 }

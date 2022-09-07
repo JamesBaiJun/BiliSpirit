@@ -6,9 +6,126 @@
              xmlns:local="clr-namespace:BiliSpirit.Views"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:vm="clr-namespace:BiliSpirit.ViewModels"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
+             d:DesignHeight="450" Loaded="{DXEvent Handler='Loaded()'}" d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Height="80" Margin="8" ShowGridLines="False">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="0.8*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid>
+                <Image Source="{Binding LoginUser.data.face}" Width="80" Height="80" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill">
+                    <Image.Clip>
+                        <EllipseGeometry Center="40,40" RadiusX="38" RadiusY="38"/>
+                    </Image.Clip>
+                </Image>
+
+                <Ellipse Fill="{StaticResource PrimaryBlueColor}" StrokeThickness="2" Stroke="White" Margin="2 2 12 2" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Ellipse>
+                <TextBlock Text="{Binding LoginUser.data.level}" Margin="0 0 10 2" FontSize="10" 
+                           HorizontalAlignment="Right" Foreground="{StaticResource PrimaryGrayColor}" Width="13" Height="16" VerticalAlignment="Bottom"/>
+            </Grid>
+
+            <StackPanel Grid.Column="1" Margin="4" 
+                        Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding LoginUser.data.name}" FontSize="18" FontWeight="Bold" VerticalAlignment="Bottom" 
+                               DockPanel.Dock="Top" Foreground="{StaticResource PrimaryPinkColor}"/>
+
+                <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
+                            Padding="4 2 4 4" Margin="8 12 8 8" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="8" 
+                            Foreground="{StaticResource PrimaryGrayColor}"/>
+                </Border>
+            </StackPanel>
+
+            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 0 12">
+                <TextBlock Text="硬币" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
+                <TextBlock Text="粉丝" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
+                <TextBlock Text="经验" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding LoginUser.data.coins}" FontSize="16" HorizontalAlignment="Center" Margin="0 4"/>
+                <TextBlock Text="{Binding LoginUser.data.follower}" FontSize="16" HorizontalAlignment="Center" Margin="0 4"/>
+                <ProgressBar Maximum="{Binding LoginUser.data.level_exp.next_exp}" Height="5" Margin="0 12 0 0"
+                             VerticalAlignment="Top" BorderThickness="0" Style="{x:Null}" Value="{Binding LoginUser.data.level_exp.current_exp}" Foreground="{StaticResource PrimaryPinkColor}"/>
+            </UniformGrid>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="22">
+                <Button Command="{Binding RefreshContentCommand}" Style="{StaticResource IconButton}">
+                    <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Line VerticalAlignment="Bottom" Margin="-1 0 -1 4" X1="0" Y1="0" X2="1" Y2="0" StrokeThickness="1" Stretch="Fill" Stroke="{StaticResource PrimaryPinkColor}" />
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <StackPanel.Resources>
+                    <Style TargetType="RadioButton">
+                        <Setter Property="Margin" Value="0 0 0 -2"/>
+                        <Setter Property="Foreground" Value="{StaticResource PrimaryPinkColor}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="RadioButton">
+                                    <Grid Background="Transparent">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="2"/>
+                                        </Grid.RowDefinitions>
+                                        <ContentPresenter Margin="12 0 12 4"/>
+                                        <Rectangle x:Name="check" Stretch="Fill" Margin="0 0 0 -3" Grid.Row="1" Fill="{StaticResource PrimaryPinkColor}"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsChecked" Value="True">
+                                            <Setter Property="Visibility" TargetName="check" Value="Visible"/>
+                                        </Trigger>
+                                        <Trigger Property="IsChecked" Value="False">
+                                            <Setter Property="Visibility" TargetName="check" Value="Collapsed"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </StackPanel.Resources>
+                <RadioButton x:Name="hotRad" IsChecked="True">
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Fire"  Width="12"/>
+                        <TextBlock Text="热门" Margin="4 0 0 0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="dynaRad">
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Fan" Width="12"/>
+                        <TextBlock Text="动态" Margin="4 0 0 0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="hisRad">
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Timer" Width="12"/>
+                        <TextBlock Text="历史" Margin="4 0 0 0"/>
+                    </StackPanel>
+                </RadioButton>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="1" CanContentScroll="False" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
+                <Grid>
+                    <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
+                              Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}"/>
+
+                    <ItemsControl Visibility="{Binding ElementName=hisRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
+                              Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}"/>
+                </Grid>
+              
+            </ScrollViewer>
+        </Grid>
     </Grid>
 </UserControl>

@@ -8,9 +8,11 @@ using System.Windows.Media;
 using System.Windows;
 using ZXing.QrCode;
 using ZXing.Common;
-using ZXing;
-using System.Drawing;
 using System.Runtime.InteropServices;
+using ZXing;
+using ZXing.QrCode.Internal;
+using ZXing.Rendering;
+using ZXing.CoreCompat.System.Drawing;
 
 namespace BiliSpirit.Common
 {
@@ -28,11 +30,11 @@ namespace BiliSpirit.Common
                 Height = height,
                 Margin = 0
             };
+
             write = new BarcodeWriter();
             write.Format = BarcodeFormat.QR_CODE;
             write.Options = options;
-            Bitmap bitmap = write.Write(content);
-            IntPtr ip = bitmap.GetHbitmap();
+            IntPtr ip = write.Write(content).GetHbitmap();
             BitmapSource bitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
                 ip, IntPtr.Zero, Int32Rect.Empty,
                 System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());
