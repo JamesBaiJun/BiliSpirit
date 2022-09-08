@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BiliSpirit"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="哔哩精灵"
         Height="390" 
         Width="220" 
         ResizeMode="NoResize" 
@@ -15,7 +15,7 @@
         UseLayoutRounding="True"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Icon=".\icon.ico"
-        BorderThickness="1">
+        BorderThickness="1" Loaded="Window_Loaded">
     <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
             <Image Source="Images/bilibili.png" Width="100" Margin="0 0 0 20" RenderOptions.BitmapScalingMode="Fant"/>

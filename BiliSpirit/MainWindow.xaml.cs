@@ -30,25 +30,11 @@ namespace BiliSpirit
         public MainWindow()
         {
             InitializeComponent();
-            Login();
         }
 
-        private async void Login()
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var info = await WebApiRequest.WebApiGetAsync("http://api.bilibili.com/x/space/myinfo");
-            if (JsonHelper.GetJsonValue(info, "code") == "0")
-            {
-                SoftwareCache.LoginUser = JsonConvert.DeserializeObject<LoginUser>(info);
-                ShellWindow shellWindow = new ShellWindow();
-                shellWindow.Show();
-                Application.Current.MainWindow = shellWindow;
-
-                this.Hide();
-            }
-            else // 登录信息获取失败
-            {
-                await GetQrCode();
-            }
+            await GetQrCode();
         }
 
         string qrcode_key = string.Empty;
@@ -101,5 +87,7 @@ namespace BiliSpirit
         {
             await VerifyLogin();
         }
+
+
     }
 }

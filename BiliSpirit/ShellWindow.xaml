@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BiliSpirit"
         mc:Ignorable="d"
-        Title="ShellWindow" Height="800" Width="400" 
+        Title="哔哩精灵" Height="800" Width="400" 
         xmlns:view="clr-namespace:BiliSpirit.Views"
         FontFamily="{StaticResource YuanTi}"
         TextElement.Foreground="{StaticResource FontPrimary}"
