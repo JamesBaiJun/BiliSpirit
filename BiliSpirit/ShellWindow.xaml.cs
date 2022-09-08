@@ -29,5 +29,9 @@ namespace BiliSpirit
         {
             DragMove();
         }
+
+        private void minBtn_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
+
+        private void cloBtn_Click(object sender, RoutedEventArgs e) => Close();
     }
 }

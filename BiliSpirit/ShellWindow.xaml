@@ -12,6 +12,7 @@
         UseLayoutRounding="True"
         Icon=".\icon.ico"
         ResizeMode="NoResize" Background="Transparent" 
+        xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
         AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
     <Grid>
         <Border Margin="8 4 8 8" CornerRadius="4" Background="White" BorderBrush="{StaticResource PrimaryPinkColor}" BorderThickness="0">
@@ -28,6 +29,38 @@
                 </Grid>
 
                 <Grid Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2 0">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="32" />
+                            <Setter Property="Height" Value="24" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextGrayColor}" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border x:Name="bd" Background="{TemplateBinding Background}"> 
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}"/>
+                                                <Setter Property="Background" Value="{StaticResource PrimaryGrayColor}"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button x:Name="minBtn" Click="minBtn_Click">
+                        <icon:PackIconMaterial Kind="Minus" Margin="4" Width="12"/>
+                    </Button>
+                    <Button x:Name="cloBtn" Click="cloBtn_Click">
+                        <icon:PackIconMaterial Kind="Close" Margin="4" Width="12"/>
+                    </Button>
+                </StackPanel>
+              
             </Grid>
         </Border>
     </Grid>

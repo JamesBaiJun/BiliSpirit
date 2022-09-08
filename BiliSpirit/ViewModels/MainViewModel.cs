@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using static BiliSpirit.Models.VideoInfo;
 
 namespace BiliSpirit.ViewModels
@@ -22,11 +23,27 @@ namespace BiliSpirit.ViewModels
 
         public async void Loaded()
         {
+            await RefreshData();
+
+            Timer timer = new Timer();
+            timer.Interval = 10000;
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+        }
+
+        public async Task RefreshData()
+        {
             await GetHots();
             await GetHistory();
             await GetLive();
         }
 
+        private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            await RefreshData();
+        }
+
+        #region Web请求
         /// <summary>
         /// 获取热门
         /// </summary>
@@ -53,8 +70,6 @@ namespace BiliSpirit.ViewModels
             HistoryList = test.data.list;
         }
 
-       
-
         /// <summary>
         /// 获取直播动态
         /// </summary>
@@ -68,6 +83,9 @@ namespace BiliSpirit.ViewModels
             var test = JsonConvert.DeserializeObject<LiveInfo>(str);
             LiveList = test.data.list;
         }
+        #endregion
+
+        #region 绑定数据
         public virtual LoginUser LoginUser { get; set; }
 
         public virtual VideoList[] HotVideoList { get; set; }
@@ -75,13 +93,9 @@ namespace BiliSpirit.ViewModels
         public virtual HistoryList[] HistoryList { get; set; }
 
         public virtual LiveList[] LiveList { get; set; }
-        
-        public async Task RefreshContent()
-        {
-            await GetHots();
-            await GetHistory();
-        }
+        #endregion
 
+        #region 启动浏览器
         public void JumpToVideo(VideoList video)
         {
             ExpolerHelper.OuterVisit(video.short_link);
@@ -96,5 +110,6 @@ namespace BiliSpirit.ViewModels
         {
             ExpolerHelper.OuterVisit($"https://live.bilibili.com/{live.roomid}?broadcast_type=1");
         }
+        #endregion
     }
 }

@@ -9,6 +9,8 @@
     <SolidColorBrush x:Key="FontPrimary" Color="#E4000000"/>
 
     <converter:HisCoverConverter x:Key="converterHis"/>
+    <converter:ImageZipConverter x:Key="imageConverterZip"/>
+    
     <Style x:Key="IconButton" TargetType="Button">
         <Setter Property="Width" Value="22" />
         <Setter Property="Height" Value="22" />
@@ -38,7 +40,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Image Source="{Binding pic}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Image Source="{Binding pic, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant"/>
 
                 <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>
@@ -127,12 +129,12 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
 
-                <Image Source="{Binding cover}" RenderOptions.BitmapScalingMode="Fant">
+                <Image Source="{Binding cover, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant">
                     <Image.Clip>
                         <EllipseGeometry Center="40,40" RadiusX="38" RadiusY="38"/>
                     </Image.Clip>
                 </Image>
-                <Image Grid.Column="2" Source="{Binding pic}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Image Grid.Column="2" Source="{Binding pic, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant"/>
 
                 <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>

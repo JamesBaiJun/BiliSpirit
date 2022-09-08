@@ -8,7 +8,9 @@
              xmlns:vm="clr-namespace:BiliSpirit.ViewModels"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             d:DesignHeight="450" Loaded="{DXEvent Handler='Loaded()'}" d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
+             xmlns:view="clr-namespace:BiliSpirit.Views"
+             d:DesignHeight="450" Loaded="{DXEvent Handler='Loaded()'}" 
+             d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -44,7 +46,7 @@
                 </Border>
             </StackPanel>
 
-            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 0 12">
+            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 12 4 12">
                 <TextBlock Text="硬币" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
                 <TextBlock Text="粉丝" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
                 <TextBlock Text="经验" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
@@ -108,6 +110,12 @@
                         </Setter>
                     </Style>
                 </StackPanel.Resources>
+                <RadioButton x:Name="dynaRad" IsChecked="True">
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Fan"  Width="12"/>
+                        <TextBlock Text="动态" Margin="4 0 0 0"/>
+                    </StackPanel>
+                </RadioButton>
                 <RadioButton x:Name="hotRad" IsChecked="True">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Fire"  Width="12"/>
@@ -116,7 +124,7 @@
                 </RadioButton>
                 <RadioButton x:Name="liveRad">
                     <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Fan" Width="12"/>
+                        <icon:PackIconMaterial Kind="Camera" Width="12"/>
                         <TextBlock Text="直播" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
@@ -130,7 +138,7 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" Height="22">
-                <Button Command="{Binding RefreshContentCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
+                <Button Command="{Binding RefreshDataCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
                     <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
                 </Button>
             </StackPanel>
@@ -142,11 +150,12 @@
 
                     <ItemsControl Visibility="{Binding ElementName=liveRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding LiveList}" ItemTemplate="{StaticResource LiveTemplate}"/>
-                    
+
                     <ItemsControl Visibility="{Binding ElementName=hisRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}"/>
+                    
+                    <view:DynamicView Visibility="{Binding ElementName=dynaRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" />
                 </Grid>
-              
             </ScrollViewer>
         </Grid>
     </Grid>
