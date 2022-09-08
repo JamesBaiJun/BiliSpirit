@@ -13,6 +13,7 @@ namespace BiliSpirit.Converters
 {
     public class ImageZipConverter : IValueConverter
     {
+        public int Pixel { get; set; } = 120;
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string str)
@@ -20,7 +21,7 @@ namespace BiliSpirit.Converters
                 var bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapImage.DecodePixelWidth = 120; // 设置解码后图像的宽度，图像变小，解析变快
+                bitmapImage.DecodePixelWidth = Pixel; // 设置解码后图像的宽度，图像变小，解析变快
 
                 bitmapImage.UriSource = new Uri(str, UriKind.Absolute);
 

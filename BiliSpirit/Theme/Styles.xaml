@@ -10,7 +10,10 @@
 
     <converter:HisCoverConverter x:Key="converterHis"/>
     <converter:ImageZipConverter x:Key="imageConverterZip"/>
-    
+    <converter:ImageZipConverter x:Key="imageConverter200Zip" Pixel="200"/>
+    <converter:ImageZipConverter x:Key="imageConverter600Zip" Pixel="600"/>
+    <DropShadowEffect x:Key="BorderShadow" ShadowDepth="0" BlurRadius="8" Color="#78D0D0D0"/>
+
     <Style x:Key="IconButton" TargetType="Button">
         <Setter Property="Width" Value="22" />
         <Setter Property="Height" Value="22" />
@@ -33,14 +36,15 @@
     </Style>
 
     <DataTemplate x:Key="VideoTemplate">
-        <Border x:Name="bd" Background="Transparent" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
+        <Border x:Name="bd" Margin="4 4 12 4" Effect="{StaticResource BorderShadow}" CornerRadius="4" Background="White" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
             <Grid Margin="4 6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Image Source="{Binding pic, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Border Background="Black"/>
+                <Image Height="76" Source="{Binding pic, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant"/>
 
                 <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>
@@ -52,7 +56,7 @@
                             <icon:PackIconMaterial Kind="PlayBox" Height="12" Width="12" Foreground="{StaticResource PrimaryTextGrayColor}" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding stat.view,StringFormat={}{0}万}" Width="50" Margin="4 0 0 0" Foreground="{StaticResource PrimaryTextGrayColor}" TextWrapping="Wrap"/>
 
-                            <icon:PackIconMaterial Kind="Text" Height="12" Width="12" Margin="16 0 0 0" Foreground="{StaticResource PrimaryTextGrayColor}" VerticalAlignment="Center"/>
+                            <icon:PackIconMaterial Kind="TextBox" Height="12" Width="12" Margin="16 0 0 0" Foreground="{StaticResource PrimaryTextGrayColor}" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding stat.danmaku}" Width="40" Margin="4 0 0 0" Foreground="{StaticResource PrimaryTextGrayColor}" TextWrapping="Wrap"/>
 
                             <icon:PackIconMaterial Kind="HandCoin" Height="12" Width="12" Margin="16 0 0 0" Foreground="{StaticResource PrimaryTextGrayColor}" VerticalAlignment="Center"/>
@@ -78,14 +82,14 @@
     </DataTemplate>
 
     <DataTemplate x:Key="HistoryTemplate">
-        <Border x:Name="bd" Background="Transparent" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToHistory(@sender.DataContext)'}">
+        <Border x:Name="bd" Background="White" Effect="{StaticResource BorderShadow}" CornerRadius="4" Margin="4 4 12 4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToHistory(@sender.DataContext)'}">
             <Grid Margin="4 6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-
-                <Image Source="{Binding .,Converter={StaticResource converterHis}}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Border Background="Black"/>
+                <Image Height="76" Source="{Binding .,Converter={StaticResource converterHis}}" RenderOptions.BitmapScalingMode="Fant"/>
 
                 <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>
@@ -121,7 +125,7 @@
 
 
     <DataTemplate x:Key="LiveTemplate">
-        <Border x:Name="bd" Background="Transparent" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToLive(@sender.DataContext)'}">
+        <Border x:Name="bd" Background="White" CornerRadius="4" Margin="4 4 12 4" Effect="{StaticResource BorderShadow}" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToLive(@sender.DataContext)'}">
             <Grid Margin="4 6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
@@ -167,7 +171,7 @@
             </Trigger>
         </DataTemplate.Triggers>
     </DataTemplate>
-    
+
     <!--#region 滚动条 -->
     <!-- ScrollViewer 滚动条 -->
     <Style x:Key="ScrollBarThumb"  TargetType="{x:Type Thumb}">

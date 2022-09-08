@@ -13,12 +13,15 @@ namespace BiliSpirit.Common
     {
         static SoftwareCache()
         {
-            CookieString = File.ReadAllText(".\\Cookie.txt");
+            if (File.Exists(".\\Cookie.txt"))
+            {
+                CookieString = File.ReadAllText(".\\Cookie.txt");
+            }
         }
         public static CookieContainer Cookie { get; set; }
 
-        public static string CookieString { get; set; }
+        public static string CookieString { get; set; } = string.Empty;
 
-        public static LoginUser LoginUser { get; set; }
+        public static LoginUser LoginUser { get; set; } 
     }
 }

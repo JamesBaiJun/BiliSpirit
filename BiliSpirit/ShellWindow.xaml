@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BiliSpirit"
         mc:Ignorable="d"
-        Title="哔哩精灵" Height="800" Width="400" 
+        Title="哔哩精灵" Height="800" Width="450" 
         xmlns:view="clr-namespace:BiliSpirit.Views"
         FontFamily="{StaticResource YuanTi}"
         TextElement.Foreground="{StaticResource FontPrimary}"
@@ -29,12 +29,12 @@
                 </Grid>
 
                 <Grid Background="Transparent" MouseLeftButtonDown="Grid_MouseLeftButtonDown"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2 0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
                     <StackPanel.Resources>
                         <Style TargetType="Button">
                             <Setter Property="Width" Value="32" />
                             <Setter Property="Height" Value="24" />
-                            <Setter Property="Foreground" Value="{StaticResource PrimaryTextGrayColor}" />
+                            <Setter Property="Foreground" Value="{StaticResource MaskColor}" />
                             <Setter Property="Background" Value="Transparent" />
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -45,7 +45,7 @@
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}"/>
-                                                <Setter Property="Background" Value="{StaticResource PrimaryGrayColor}"/>
+                                                <Setter Property="Background" Value="#788D8D8D"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>

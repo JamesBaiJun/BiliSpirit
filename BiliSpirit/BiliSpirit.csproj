@@ -29,9 +29,4 @@
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
     <PackageReference Include="ZXing.Net.Bindings.CoreCompat.System.Drawing" Version="0.16.7-beta" />
   </ItemGroup>
-  <ItemGroup>
-    <None Update="Cookie.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
 </Project>

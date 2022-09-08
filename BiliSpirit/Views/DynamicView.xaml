@@ -15,10 +15,7 @@
         <ItemsControl ItemsSource="{Binding DynamicVideoItems}" Margin="4 4 0 4">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="4 4 16 4" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
-                        <Border.Effect>
-                            <DropShadowEffect ShadowDepth="0" BlurRadius="8" Color="#78D0D0D0"/>
-                        </Border.Effect>
+                    <Border Margin="4 4 16 4" Effect="{StaticResource BorderShadow}" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60"/>

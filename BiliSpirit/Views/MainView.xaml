@@ -16,6 +16,19 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Image x:Name="topimage" Margin="-1 0" Source="{Binding TopImage,Converter={StaticResource imageConverter600Zip}}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top">
+
+        </Image>
+        <Grid Height="{Binding ElementName=topimage,Path=ActualHeight}" VerticalAlignment="Top">
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#96000000" Offset="1"/>
+                    <GradientStop Color="#2A000000" Offset="0.7"/>
+                    <GradientStop Color="#5D3B3B3B" Offset="0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+        </Grid>
         <Grid Height="80" Margin="8" ShowGridLines="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
@@ -36,26 +49,31 @@
 
             <StackPanel Grid.Column="1" Margin="4" 
                         Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding LoginUser.data.name}" FontSize="18" FontWeight="Bold" VerticalAlignment="Bottom" 
-                               DockPanel.Dock="Top" Foreground="{StaticResource PrimaryPinkColor}"/>
+                <TextBlock Text="{Binding LoginUser.data.name}" FontSize="20" VerticalAlignment="Bottom" 
+                               DockPanel.Dock="Top" Foreground="White"/>
 
                 <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
-                            Padding="4 2 4 4" Margin="8" HorizontalAlignment="Center">
+                            Padding="4 2 4 4" Margin="8 12 8 0" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="10" 
-                            Foreground="{StaticResource PrimaryGrayColor}"/>
+                            Foreground="White"/>
                 </Border>
             </StackPanel>
 
-            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 12 4 12">
-                <TextBlock Text="硬币" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
-                <TextBlock Text="粉丝" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
-                <TextBlock Text="经验" VerticalAlignment="Bottom" Foreground="{StaticResource PrimaryTextGrayColor}" HorizontalAlignment="Center"/>
+            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 4 16" TextElement.Foreground="{StaticResource PrimaryGrayColor}">
+                <TextBlock Text="硬币" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <TextBlock Text="粉丝" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <TextBlock Text="经验" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 <TextBlock Text="{Binding LoginUser.data.coins}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
                 <TextBlock Text="{Binding LoginUser.data.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
                 <ProgressBar Maximum="{Binding LoginUser.data.level_exp.next_exp}" Height="5"
                              VerticalAlignment="Center" BorderThickness="0" Margin="0 2 0 0" Style="{x:Null}" Value="{Binding LoginUser.data.level_exp.current_exp}" 
                              Foreground="{StaticResource PrimaryPinkColor}"/>
             </UniformGrid>
+
+            <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
+                    Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                <TextBlock Text="{Binding UnReadCount}" Foreground="White" HorizontalAlignment="Center" FontSize="10"/>
+            </Border>
         </Grid>
 
         <Grid Grid.Row="1">
@@ -110,6 +128,12 @@
                         </Setter>
                     </Style>
                 </StackPanel.Resources>
+                <RadioButton x:Name="recomRad" IsChecked="True">
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Film"  Width="12"/>
+                        <TextBlock Text="推荐" Margin="4 0 0 0"/>
+                    </StackPanel>
+                </RadioButton>
                 <RadioButton x:Name="dynaRad" IsChecked="True">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Fan"  Width="12"/>
@@ -138,11 +162,11 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" Height="22">
-                <Button Command="{Binding RefreshDataCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
+                <!--<Button Command="{Binding RefreshDataCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
                     <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
-                </Button>
+                </Button>-->
             </StackPanel>
-            
+
             <ScrollViewer Grid.Row="1" CanContentScroll="False" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
                 <Grid>
                     <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
@@ -153,10 +177,39 @@
 
                     <ItemsControl Visibility="{Binding ElementName=hisRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}"/>
-                    
+
                     <view:DynamicView Visibility="{Binding ElementName=dynaRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" />
+
+                    <view:RecommendView Visibility="{Binding ElementName=recomRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" />
                 </Grid>
             </ScrollViewer>
+
+            <Grid Grid.RowSpan="3" HorizontalAlignment="Right" Margin="8">
+                <icon:PackIconMaterial Kind="RefreshCircle" Foreground="{StaticResource PrimaryPinkColor}" 
+                                        RenderTransformOrigin="0.5,0.5"  Width="14" Height="14">
+                    <icon:PackIconMaterial.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform x:Name="totate" Angle="45"/>
+                        </TransformGroup>
+                    </icon:PackIconMaterial.RenderTransform>
+                    <icon:PackIconMaterial.Style>
+                        <Style TargetType="icon:PackIconMaterial">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation From="0" To="360" Duration="0:0:1"  RepeatBehavior="3x"
+                                                                 Storyboard.TargetProperty="RenderTransform.Children[0].Angle"/>
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </icon:PackIconMaterial.Style>
+                </icon:PackIconMaterial>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

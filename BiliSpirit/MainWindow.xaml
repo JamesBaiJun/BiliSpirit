@@ -26,8 +26,6 @@
 
             <icon:PackIconMaterial Kind="Refresh" Background="Transparent" MouseDown="PackIconMaterial_MouseDown" 
                                    HorizontalAlignment="Center"  Foreground="{StaticResource PrimaryPinkColor}"/>
-
-            <!--<Button Width="80" Click="Button_Click" Height="30"/>-->
         </StackPanel>
     </Grid>
 </Window>
