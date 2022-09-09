@@ -44,6 +44,7 @@ namespace BiliSpirit.ViewModels
             await Task.Delay(50);
             await GetStat();
             await GetUnReadMessage();
+            await GetUnReadDynamic();
 
             await GetHots();
             await GetHistory();
@@ -55,6 +56,7 @@ namespace BiliSpirit.ViewModels
         {
             await GetStat();
             await GetUnReadMessage();
+            await GetUnReadDynamic();
         }
 
         #region Web请求
@@ -150,6 +152,21 @@ namespace BiliSpirit.ViewModels
         }
 
         /// <summary>
+        /// 获取未读动态
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetUnReadDynamic()
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data["alltype_offset"] = "0";
+            data["article_offset"] = "0";
+            data["video_offset"] = "703911862525231100";
+            string str = await WebApiRequest.WebApiGetAsync("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/web_homepage", data);
+            var unReadInfo = JsonConvert.DeserializeObject<NewDynamicInfo>(str);
+            UnReadDynamicCount = unReadInfo.data.alltype_num;
+        }
+
+        /// <summary>
         /// 获取背景图片
         /// </summary>
         /// <returns></returns>
@@ -173,6 +190,7 @@ namespace BiliSpirit.ViewModels
         public virtual LoginUser LoginUser { get; set; }
 
         public virtual int UnReadCount { get; set; }
+        public virtual int UnReadDynamicCount { get; set; }
 
         public virtual ObservableCollection<VideoList> HotVideoList { get; set; } = new ObservableCollection<VideoList>();
 

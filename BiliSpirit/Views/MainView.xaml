@@ -91,6 +91,7 @@
                 <StackPanel.Resources>
                     <Style TargetType="RadioButton">
                         <Setter Property="Foreground" Value="{StaticResource PrimaryPinkColor}"/>
+                        <Setter Property="GroupName" Value="tabBtn}"/>
                         <Setter Property="Template">
                             <Setter.Value>
                                 <ControlTemplate TargetType="RadioButton">
@@ -133,19 +134,28 @@
                         </Setter>
                     </Style>
                 </StackPanel.Resources>
-                <RadioButton x:Name="recomRad" IsChecked="True">
+                <RadioButton x:Name="recomRad">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Film"  Width="12"/>
                         <TextBlock Text="推荐" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="dynaRad" IsChecked="True">
-                    <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Fan"  Width="12"/>
-                        <TextBlock Text="动态" Margin="4 0 0 0"/>
-                    </StackPanel>
-                </RadioButton>
-                <RadioButton x:Name="hotRad" IsChecked="True"  Checked="{DXEvent Handler='GetHots()'}">
+                <Grid>
+                    <RadioButton x:Name="dynaRad">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Fan"  Width="12"/>
+                            <TextBlock Text="动态" Margin="4 0 0 0"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <Border Background="{StaticResource PrimaryBlueColor}" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}"
+                            Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16"
+                            HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseLeftButtonDown="{DXEvent Handler='ViewMessage()'}">
+                        <TextBlock Text="{Binding UnReadDynamicCount}" FontFamily="Microsoft YaHei Light" Foreground="White" HorizontalAlignment="Center" FontSize="8"/>
+                    </Border>
+                </Grid>
+
+                <RadioButton x:Name="hotRad" IsChecked="True" Checked="{DXEvent Handler='GetHots()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Fire"  Width="12"/>
                         <TextBlock Text="热门" Margin="4 0 0 0"/>
@@ -157,7 +167,7 @@
                         <TextBlock Text="直播" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="hisRad"  Checked="{DXEvent Handler='GetHistory()'}">
+                <RadioButton x:Name="hisRad" Checked="{DXEvent Handler='GetHistory()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Timer" Width="12"/>
                         <TextBlock Text="历史" Margin="4 0 0 0"/>
