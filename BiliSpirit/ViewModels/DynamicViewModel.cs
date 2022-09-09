@@ -1,9 +1,13 @@
 ﻿using BiliSpirit.Common;
 using BiliSpirit.Models;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.POCO;
+using DevExpress.Mvvm.UI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,14 +21,15 @@ namespace BiliSpirit.ViewModels
         public DynamicViewModel()
         {
         }
+        protected IDispatcherService DispatcherService { get { return this.GetService<IDispatcherService>(); } }
 
-        public virtual DynamicVideoItem[] DynamicVideoItems { get; set; }
+        public virtual ObservableCollection<DynamicVideoItem> DynamicVideoItems { get; set; } = new ObservableCollection<DynamicVideoItem>();
         public async void Loaded()
         {
             await GetAllDynamic();
 
             Timer timer = new Timer();
-            timer.Interval = 5000;
+            timer.Interval = 30000;
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
         }
@@ -46,7 +51,8 @@ namespace BiliSpirit.ViewModels
             data["page"] = "1";
             string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all", data);
             var test = JsonConvert.DeserializeObject<DynamicVideoInfo>(str);
-            DynamicVideoItems = test.data.items;
+
+            await DynamicLoad(test.data.items, DynamicVideoItems);
         }
 
         /// <summary>
@@ -56,6 +62,22 @@ namespace BiliSpirit.ViewModels
         public void JumpToVideo(DynamicVideoItem videoItem)
         {
             ExpolerHelper.OuterVisit("https:" + videoItem.modules.module_dynamic.major.archive.jump_url);
+        }
+
+        /// <summary>
+        /// 动态加载列表数据
+        /// </summary>
+        private async Task DynamicLoad<T>(Array array, ObservableCollection<T> target) where T : class
+        {
+            await DispatcherService.BeginInvoke(new Action(async () =>
+            {
+                target.Clear();
+                foreach (var item in array)
+                {
+                    target.Add(item as T);
+                    await Task.Delay(100);
+                }
+            }));
         }
     }
 }

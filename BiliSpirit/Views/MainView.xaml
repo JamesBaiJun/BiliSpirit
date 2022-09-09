@@ -8,9 +8,12 @@
              xmlns:vm="clr-namespace:BiliSpirit.ViewModels"
              xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             xmlns:view="clr-namespace:BiliSpirit.Views"
+             xmlns:view="clr-namespace:BiliSpirit.Views" xmlns:com="clr-namespace:BiliSpirit.Common"
              d:DesignHeight="450" Loaded="{DXEvent Handler='Loaded()'}" 
              d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:DispatcherService />
+    </dxmvvm:Interaction.Behaviors>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
             <RowDefinition Height="120"/>
@@ -62,7 +65,7 @@
             </UniformGrid>
 
             <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
-                    Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                    Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseLeftButtonDown="{DXEvent Handler='ViewMessage()'}">
                 <TextBlock Text="{Binding UnReadCount}" Foreground="White" HorizontalAlignment="Center" FontSize="10"/>
             </Border>
         </Grid>
@@ -131,19 +134,19 @@
                         <TextBlock Text="动态" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="hotRad" IsChecked="True">
+                <RadioButton x:Name="hotRad" IsChecked="True"  Checked="{DXEvent Handler='GetHots()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Fire"  Width="12"/>
                         <TextBlock Text="热门" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="liveRad">
+                <RadioButton x:Name="liveRad"  Checked="{DXEvent Handler='GetLive()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Camera" Width="12"/>
                         <TextBlock Text="直播" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="hisRad">
+                <RadioButton x:Name="hisRad"  Checked="{DXEvent Handler='GetHistory()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Timer" Width="12"/>
                         <TextBlock Text="历史" Margin="4 0 0 0"/>
@@ -153,54 +156,51 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" Height="22">
-                <!--<Button Command="{Binding RefreshDataCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
+                <Button Command="{Binding RefreshDataCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
                     <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
-                </Button>-->
+                </Button>
             </StackPanel>
 
             <ScrollViewer Grid.Row="1" CanContentScroll="False" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
                 <Grid>
                     <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
-                              Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}"/>
+                              Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}">
+                        <dxmvvm:Interaction.Behaviors>
+                            <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                                <com:FadeAnimateItemsBehavior.Animation>
+                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
+                                </com:FadeAnimateItemsBehavior.Animation>
+                            </com:FadeAnimateItemsBehavior>
+                        </dxmvvm:Interaction.Behaviors>
+                    </ItemsControl>
 
                     <ItemsControl Visibility="{Binding ElementName=liveRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
-                              Margin="4" ItemsSource="{Binding LiveList}" ItemTemplate="{StaticResource LiveTemplate}"/>
+                              Margin="4" ItemsSource="{Binding LiveList}" ItemTemplate="{StaticResource LiveTemplate}">
+                        <dxmvvm:Interaction.Behaviors>
+                            <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                                <com:FadeAnimateItemsBehavior.Animation>
+                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
+                                </com:FadeAnimateItemsBehavior.Animation>
+                            </com:FadeAnimateItemsBehavior>
+                        </dxmvvm:Interaction.Behaviors>
+                    </ItemsControl>
 
                     <ItemsControl Visibility="{Binding ElementName=hisRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
-                              Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}"/>
+                              Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}">
+                        <dxmvvm:Interaction.Behaviors>
+                            <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                                <com:FadeAnimateItemsBehavior.Animation>
+                                    <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
+                                </com:FadeAnimateItemsBehavior.Animation>
+                            </com:FadeAnimateItemsBehavior>
+                        </dxmvvm:Interaction.Behaviors>
+                    </ItemsControl>
 
                     <view:DynamicView Visibility="{Binding ElementName=dynaRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" />
 
                     <view:RecommendView Visibility="{Binding ElementName=recomRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" />
                 </Grid>
             </ScrollViewer>
-
-            <Grid Grid.RowSpan="3" HorizontalAlignment="Right" Margin="8">
-                <icon:PackIconMaterial Kind="RefreshCircle" Foreground="{StaticResource PrimaryPinkColor}" 
-                                        RenderTransformOrigin="0.5,0.5"  Width="14" Height="14">
-                    <icon:PackIconMaterial.RenderTransform>
-                        <TransformGroup>
-                            <RotateTransform x:Name="totate" Angle="45"/>
-                        </TransformGroup>
-                    </icon:PackIconMaterial.RenderTransform>
-                    <icon:PackIconMaterial.Style>
-                        <Style TargetType="icon:PackIconMaterial">
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsRefreshing}" Value="True">
-                                    <DataTrigger.EnterActions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <DoubleAnimation From="0" To="360" Duration="0:0:1"  RepeatBehavior="3x"
-                                                                 Storyboard.TargetProperty="RenderTransform.Children[0].Angle"/>
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </DataTrigger.EnterActions>
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </icon:PackIconMaterial.Style>
-                </icon:PackIconMaterial>
-            </Grid>
         </Grid>
     </Grid>
 </UserControl>

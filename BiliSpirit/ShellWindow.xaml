@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BiliSpirit"
         mc:Ignorable="d"
-        Title="哔哩精灵" Height="800" Width="450" 
+        Title="哔哩精灵" Height="900" Width="450" 
         xmlns:view="clr-namespace:BiliSpirit.Views"
         FontFamily="{StaticResource YuanTi}"
         TextElement.Foreground="{StaticResource FontPrimary}"
@@ -13,7 +13,8 @@
         Icon=".\icon.ico"
         ResizeMode="NoResize" Background="Transparent" 
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        AllowsTransparency="True" WindowStyle="None" WindowStartupLocation="CenterScreen">
+        AllowsTransparency="True" WindowStyle="None" MouseLeave="Window_MouseLeave" Top="20"
+        MouseEnter="Window_MouseEnter" WindowStartupLocation="CenterScreen">
     <Grid>
         <Border Margin="8 4 8 8" CornerRadius="4" Background="White" BorderBrush="{StaticResource PrimaryPinkColor}" BorderThickness="0">
             <Border.Effect>

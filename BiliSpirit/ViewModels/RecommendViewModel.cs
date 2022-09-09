@@ -1,9 +1,13 @@
 ﻿using BiliSpirit.Common;
 using BiliSpirit.Models;
+using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.POCO;
+using DevExpress.Mvvm.UI;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +32,7 @@ namespace BiliSpirit.ViewModels
             await GetAllDynamic();
         }
 
-        public virtual RecommendItem[] RecommendItems { get; set; }
+        public virtual ObservableCollection<RecommendItem> RecommendItems { get; set; } = new ObservableCollection<RecommendItem>();
 
         /// <summary>
         /// 获取全部动态
@@ -51,12 +55,13 @@ namespace BiliSpirit.ViewModels
             {
                 string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/web-interface/index/top/feed/rcmd", data);
                 var test = JsonConvert.DeserializeObject<RecommendInfo>(str);
-                RecommendItems = test.data.item;
+
+                await DynamicLoad(test.data.item, RecommendItems);
             }
             catch (Exception)
             {
             }
-            
+
         }
 
         /// <summary>
@@ -66,6 +71,24 @@ namespace BiliSpirit.ViewModels
         public void JumpToVideo(RecommendItem videoItem)
         {
             ExpolerHelper.OuterVisit(videoItem.uri);
+        }
+
+        protected IDispatcherService DispatcherService { get { return this.GetService<IDispatcherService>(); } }
+
+        /// <summary>
+        /// 动态加载列表数据
+        /// </summary>
+        private async Task DynamicLoad<T>(Array array, ObservableCollection<T> target) where T : class
+        {
+            await DispatcherService.BeginInvoke(new Action(async () =>
+            {
+                target.Clear();
+                foreach (var item in array)
+                {
+                    target.Add(item as T);
+                    await Task.Delay(100);
+                }
+            }));
         }
     }
 }

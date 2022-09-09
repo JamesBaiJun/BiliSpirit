@@ -6,16 +6,27 @@
              xmlns:local="clr-namespace:BiliSpirit.Views"
              xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
              xmlns:vm="clr-namespace:BiliSpirit.ViewModels"
-             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks" 
+             xmlns:com="clr-namespace:BiliSpirit.Common"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="{DXEvent Handler='Loaded()'}"
              DataContext="{dxmvvm:ViewModelSource Type=vm:DynamicViewModel}">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:DispatcherService/>
+    </dxmvvm:Interaction.Behaviors>
     <Grid>
         <ItemsControl ItemsSource="{Binding DynamicVideoItems}" Margin="4 4 0 4">
+            <dxmvvm:Interaction.Behaviors>
+                <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                    <com:FadeAnimateItemsBehavior.Animation>
+                        <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
+                    </com:FadeAnimateItemsBehavior.Animation>
+                </com:FadeAnimateItemsBehavior>
+            </dxmvvm:Interaction.Behaviors>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="4 4 16 4" Effect="{StaticResource BorderShadow}" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
+                    <Border Margin="4 4 16 4" Height="140" Effect="{StaticResource BorderShadow}" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60"/>
