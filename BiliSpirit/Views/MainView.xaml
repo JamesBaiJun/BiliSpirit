@@ -16,60 +16,71 @@
     </dxmvvm:Interaction.Behaviors>
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Image x:Name="topimage" Margin="-1 0" Source="{Binding TopImage,Converter={StaticResource imageConverter600Zip}}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top">
-        </Image>
-        <Border Height="90" Margin="8 4" Background="#E1FFFFFF" CornerRadius="8" Effect="{StaticResource BorderShadow}" VerticalAlignment="Bottom"/>
+        <Grid x:Name="topGrid" Height="120">
+            <Image x:Name="topimage" Margin="-1 0" Source="{Binding TopImage,Converter={StaticResource imageConverter600Zip}}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top">
+            </Image>
+            <Border Height="90" Margin="8 4" Background="#E1FFFFFF" CornerRadius="8" Effect="{StaticResource BorderShadow}" VerticalAlignment="Bottom"/>
 
-        <Grid Margin="12 28 12 4" ShowGridLines="False">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition />
-                <ColumnDefinition Width="2*"/>
-            </Grid.ColumnDefinitions>
-            <Grid>
-                <Image Source="{Binding LoginUser.data.face}" Width="80" Height="80" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill">
-                    <Image.Clip>
-                        <EllipseGeometry Center="40,40" RadiusX="38" RadiusY="38"/>
-                    </Image.Clip>
-                </Image>
+            <Grid Margin="12 28 12 4" ShowGridLines="False">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Image Source="{Binding LoginUser.data.face}" Width="80" Height="80" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill">
+                        <Image.Clip>
+                            <EllipseGeometry Center="40,40" RadiusX="38" RadiusY="38"/>
+                        </Image.Clip>
+                    </Image>
 
-                <Ellipse Fill="{StaticResource PrimaryBlueColor}" StrokeThickness="2" Stroke="White" Margin="2 2 12 2" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Ellipse>
-                <TextBlock Text="{Binding LoginUser.data.level}" Margin="0 0 10 2" FontSize="10" 
+                    <Ellipse Fill="{StaticResource PrimaryBlueColor}" StrokeThickness="2" Stroke="White" Margin="2 2 12 2" Width="16" Height="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"></Ellipse>
+                    <TextBlock Text="{Binding LoginUser.data.level}" Margin="0 0 10 2" FontSize="10" 
                            HorizontalAlignment="Right" Foreground="{StaticResource PrimaryGrayColor}" Width="13" Height="16" VerticalAlignment="Bottom"/>
-            </Grid>
+                </Grid>
 
-            <StackPanel Grid.Column="1" Margin="4" 
+                <StackPanel Grid.Column="1" Margin="4" 
                         Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding LoginUser.data.name}" FontSize="16" Foreground="{StaticResource PrimaryPinkColor}"/>
+                    <TextBlock Text="{Binding LoginUser.data.name}" FontSize="16" Foreground="{StaticResource PrimaryPinkColor}"/>
 
 
-                <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
+                    <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
                             Padding="4 2 4 4" Margin="4" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="10" 
+                        <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="10" 
                             Foreground="White"/>
-                </Border>
+                    </Border>
 
-            </StackPanel>
+                </StackPanel>
 
-            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 4 16">
-                <TextBlock Text="关注" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <TextBlock Text="粉丝" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <TextBlock Text="动态" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding UserStatData.following}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
-                <TextBlock Text="{Binding UserStatData.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
-                <TextBlock Text="{Binding UserStatData.dynamic_count}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
-            </UniformGrid>
+                <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 4 16">
+                    <TextBlock Text="关注" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="粉丝" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="动态" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding UserStatData.following}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                    <TextBlock Text="{Binding UserStatData.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                    <TextBlock Text="{Binding UserStatData.dynamic_count}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                </UniformGrid>
 
-            <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
+                <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
                     Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseLeftButtonDown="{DXEvent Handler='ViewMessage()'}">
-                <TextBlock Text="{Binding UnReadCount}" Foreground="White" HorizontalAlignment="Center" FontSize="10"/>
-            </Border>
+                    <TextBlock Text="{Binding UnReadCount}" Foreground="White" HorizontalAlignment="Center" FontSize="10"/>
+                </Border>
+            </Grid>
         </Grid>
 
+        <Grid x:Name="scolledTopGrid" Height="36">
+            <Image Source="{Binding LoginUser.data.face}" RenderOptions.BitmapScalingMode="Fant" 
+                   HorizontalAlignment="Left" Margin="8 8 0 0" VerticalAlignment="Center" Stretch="Uniform">
+                <Image.Clip>
+                    <EllipseGeometry Center="14,14" RadiusX="14" RadiusY="14"/>
+                </Image.Clip>
+            </Image>
+            <Image Source="../Images/bilibili.png" VerticalAlignment="Center" Margin="0 4 0 6" RenderOptions.BitmapScalingMode="Fant"/>
+        </Grid>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -161,7 +172,7 @@
                 </Button>
             </StackPanel>
 
-            <ScrollViewer Grid.Row="1" CanContentScroll="False" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
+            <ScrollViewer Grid.Row="1" CanContentScroll="False" ScrollChanged="ScrollViewer_ScrollChanged" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
                 <Grid>
                     <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}">

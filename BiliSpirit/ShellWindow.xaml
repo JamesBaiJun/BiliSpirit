@@ -46,7 +46,32 @@
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
                                                 <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}"/>
-                                                <Setter Property="Background" Value="#788D8D8D"/>
+                                                <Setter Property="Background" Value="#78E3E3E3"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                        <Style TargetType="ToggleButton">
+                            <Setter Property="Width" Value="32" />
+                            <Setter Property="Height" Value="24" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border x:Name="bd" Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}"/>
+                                                <Setter Property="Background" Value="#78E3E3E3"/>
+                                            </Trigger>
+                                            <Trigger Property="IsChecked" Value="True">
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="Background" Value="{StaticResource PrimaryBlueColor}"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -54,9 +79,9 @@
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
-                    <Button x:Name="miniBtn" Click="minBtn_Click">
-                        <icon:PackIconMaterial Kind="ArrowCollapseAll" Margin="4" Width="12"/>
-                    </Button>
+                    <ToggleButton x:Name="miniBtn" Click="miniBtn_Click">
+                        <icon:PackIconMaterial Kind="PinOutline" Margin="4" Width="7"/>
+                    </ToggleButton>
                     <Button x:Name="minBtn" Click="minBtn_Click">
                         <icon:PackIconMaterial Kind="Minus" Margin="4" Width="12"/>
                     </Button>

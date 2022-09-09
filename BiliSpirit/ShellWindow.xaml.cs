@@ -55,5 +55,10 @@ namespace BiliSpirit
                 Top = 0;
             }
         }
+
+        private void miniBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Topmost = (bool)miniBtn.IsChecked;
+        }
     }
 }
