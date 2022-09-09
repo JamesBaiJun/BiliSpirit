@@ -34,7 +34,7 @@
                         <Style TargetType="Button">
                             <Setter Property="Width" Value="32" />
                             <Setter Property="Height" Value="24" />
-                            <Setter Property="Foreground" Value="{StaticResource MaskColor}" />
+                            <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}" />
                             <Setter Property="Background" Value="Transparent" />
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -53,6 +53,9 @@
                             </Setter>
                         </Style>
                     </StackPanel.Resources>
+                    <Button x:Name="miniBtn" Click="minBtn_Click">
+                        <icon:PackIconMaterial Kind="ArrowCollapseAll" Margin="4" Width="12"/>
+                    </Button>
                     <Button x:Name="minBtn" Click="minBtn_Click">
                         <icon:PackIconMaterial Kind="Minus" Margin="4" Width="12"/>
                     </Button>

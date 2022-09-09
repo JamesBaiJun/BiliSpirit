@@ -35,7 +35,8 @@ namespace BiliSpirit.ViewModels
         public async Task RefreshData()
         {
             IsRefreshing = true;
-            await Task.Delay(250);
+            await Task.Delay(50);
+            await GetStat();
             await GetHots();
             await GetHistory();
             await GetLive();
@@ -49,6 +50,17 @@ namespace BiliSpirit.ViewModels
         }
 
         #region Web请求
+        /// <summary>
+        /// 获取个人信息
+        /// </summary>
+        /// <returns></returns>
+        private async Task GetStat()
+        {
+            string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/web-interface/nav/stat");
+            var test = JsonConvert.DeserializeObject<UserStatInfo>(str);
+            UserStatData = test.data;
+        }
+
         /// <summary>
         /// 获取热门
         /// </summary>
@@ -122,6 +134,8 @@ namespace BiliSpirit.ViewModels
         #endregion
 
         #region 绑定数据
+
+        public virtual UserStatData UserStatData { get; set; }
         public virtual string TopImage { get; set; }
 
         public virtual LoginUser LoginUser { get; set; }

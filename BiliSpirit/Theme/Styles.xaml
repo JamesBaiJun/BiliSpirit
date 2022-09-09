@@ -5,7 +5,7 @@
     <SolidColorBrush x:Key="PrimaryGreenColor" Color="#6dc781"/>
     <SolidColorBrush x:Key="PrimaryGrayColor" Color="#F4F4F4"/>
     <SolidColorBrush x:Key="PrimaryTextGrayColor" Color="#70848484"/>
-    <SolidColorBrush x:Key="MaskColor" Color="#6323ADE5"/>
+    <SolidColorBrush x:Key="MaskColor" Color="#D90C89BB"/>
     <SolidColorBrush x:Key="FontPrimary" Color="#E4000000"/>
 
     <converter:HisCoverConverter x:Key="converterHis"/>
@@ -42,9 +42,7 @@
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-
-                <Border Background="Black"/>
-                <Image Height="76" Source="{Binding pic, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Image Height="72" Source="{Binding pic, Converter={StaticResource imageConverterZip}}" RenderOptions.BitmapScalingMode="Fant"/>
 
                 <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>
@@ -88,8 +86,7 @@
                     <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Background="Black"/>
-                <Image Height="76" Source="{Binding .,Converter={StaticResource converterHis}}" RenderOptions.BitmapScalingMode="Fant"/>
+                <Image Height="72" Source="{Binding .,Converter={StaticResource converterHis}}" RenderOptions.BitmapScalingMode="Fant"/>
 
                 <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                        VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="8"/>

@@ -13,27 +13,19 @@
              d:DesignWidth="800" DataContext="{dxmvvm:ViewModelSource Type=vm:MainViewModel}">
     <Grid ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Image x:Name="topimage" Margin="-1 0" Source="{Binding TopImage,Converter={StaticResource imageConverter600Zip}}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top">
-
         </Image>
-        <Grid Height="{Binding ElementName=topimage,Path=ActualHeight}" VerticalAlignment="Top">
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#96000000" Offset="1"/>
-                    <GradientStop Color="#2A000000" Offset="0.7"/>
-                    <GradientStop Color="#5D3B3B3B" Offset="0"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-        </Grid>
-        <Grid Height="80" Margin="8" ShowGridLines="False">
+        <Border Height="90" Margin="8 4" Background="#E1FFFFFF" CornerRadius="8" Effect="{StaticResource BorderShadow}" VerticalAlignment="Bottom"/>
+
+        <Grid Margin="12 28 12 4" ShowGridLines="False">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="0.7*"/>
-                <ColumnDefinition/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
             <Grid>
                 <Image Source="{Binding LoginUser.data.face}" Width="80" Height="80" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill">
@@ -46,28 +38,27 @@
                 <TextBlock Text="{Binding LoginUser.data.level}" Margin="0 0 10 2" FontSize="10" 
                            HorizontalAlignment="Right" Foreground="{StaticResource PrimaryGrayColor}" Width="13" Height="16" VerticalAlignment="Bottom"/>
             </Grid>
-
+            
             <StackPanel Grid.Column="1" Margin="4" 
                         Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock Text="{Binding LoginUser.data.name}" FontSize="20" VerticalAlignment="Bottom" 
-                               DockPanel.Dock="Top" Foreground="White"/>
+                <TextBlock Text="{Binding LoginUser.data.name}" FontSize="16" Foreground="{StaticResource PrimaryPinkColor}"/>
+
 
                 <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
-                            Padding="4 2 4 4" Margin="8 12 8 0" HorizontalAlignment="Center">
+                            Padding="4 2 4 4" Margin="4" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding LoginUser.data.vip.label.text}" FontSize="10" 
                             Foreground="White"/>
                 </Border>
+
             </StackPanel>
 
-            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 4 16" TextElement.Foreground="{StaticResource PrimaryGrayColor}">
-                <TextBlock Text="硬币" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+            <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 4 16">
+                <TextBlock Text="关注" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
                 <TextBlock Text="粉丝" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <TextBlock Text="经验" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                <TextBlock Text="{Binding LoginUser.data.coins}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
-                <TextBlock Text="{Binding LoginUser.data.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
-                <ProgressBar Maximum="{Binding LoginUser.data.level_exp.next_exp}" Height="5"
-                             VerticalAlignment="Center" BorderThickness="0" Margin="0 2 0 0" Style="{x:Null}" Value="{Binding LoginUser.data.level_exp.current_exp}" 
-                             Foreground="{StaticResource PrimaryPinkColor}"/>
+                <TextBlock Text="动态" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                <TextBlock Text="{Binding UserStatData.following}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                <TextBlock Text="{Binding UserStatData.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
+                <TextBlock Text="{Binding UserStatData.dynamic_count}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
             </UniformGrid>
 
             <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
