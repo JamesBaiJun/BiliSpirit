@@ -41,7 +41,7 @@
                 <TextBlock Text="{Binding LoginUser.data.level}" Margin="0 0 10 2" FontSize="10" 
                            HorizontalAlignment="Right" Foreground="{StaticResource PrimaryGrayColor}" Width="13" Height="16" VerticalAlignment="Bottom"/>
             </Grid>
-            
+
             <StackPanel Grid.Column="1" Margin="4" 
                         Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="{Binding LoginUser.data.name}" FontSize="16" Foreground="{StaticResource PrimaryPinkColor}"/>
