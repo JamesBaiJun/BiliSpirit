@@ -156,7 +156,7 @@
                         </StackPanel>
                     </RadioButton>
 
-                    <Border Background="{StaticResource PrimaryBlueColor}" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}"
+                    <Border Background="{StaticResource PrimaryBlueColor}" Visibility="{DXBinding 'UnReadDynamicCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}"
                             Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16" MouseLeftButtonDown="{DXEvent Handler='ViewDynamic()'}"
                             HorizontalAlignment="Right" VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding UnReadDynamicCount}" FontFamily="Microsoft YaHei Light" Foreground="White" HorizontalAlignment="Center" FontSize="8"/>

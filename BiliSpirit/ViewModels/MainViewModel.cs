@@ -3,6 +3,7 @@ using BiliSpirit.Models;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Windows;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using Windows.Foundation.Collections;
 using static BiliSpirit.Models.VideoInfo;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -32,6 +35,29 @@ namespace BiliSpirit.ViewModels
             await GetTopImage();
             await RefreshData();
 
+            ToastNotificationManagerCompat.OnActivated += toastArgs =>
+            {
+                ToastArguments args = ToastArguments.Parse(toastArgs.Argument);
+                try
+                {
+                    switch (args["action"])
+                    {
+                        case "视频动态":
+                            ViewDynamic();
+                            break;
+                        case "直播动态":
+                            ViewLiveCenter();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            
+            };
+
             Timer timer = new Timer();
             timer.Interval = 20000;
             timer.Elapsed += Timer_Elapsed;
@@ -45,6 +71,7 @@ namespace BiliSpirit.ViewModels
             await GetStat();
             await GetUnReadMessage();
             await GetUnReadDynamic();
+            await GetLiveDynamic();
 
             await GetHots();
             await GetHistory();
@@ -57,6 +84,7 @@ namespace BiliSpirit.ViewModels
             await GetStat();
             await GetUnReadMessage();
             await GetUnReadDynamic();
+            await GetLiveDynamic();
         }
 
         #region Web请求
@@ -164,6 +192,37 @@ namespace BiliSpirit.ViewModels
             string str = await WebApiRequest.WebApiGetAsync("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/web_homepage", data);
             var unReadInfo = JsonConvert.DeserializeObject<NewDynamicInfo>(str);
             UnReadDynamicCount = unReadInfo.data.video_num; // 只显示
+            if (UnReadDynamicCount > 0)
+            {
+                new ToastContentBuilder()
+                .AddArgument("action", "视频动态")
+                .AddArgument("conversationId", 9813)
+                .AddText("哔哩哔哩精灵")
+                .AddText($"{UnReadDynamicCount} 条新视频动态！").Show();
+            }
+        }
+
+        int lastLiveCount = 0;
+        /// <summary>
+        /// 获取直播动态数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task GetLiveDynamic()
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data["page"] = "1";
+            string str = await WebApiRequest.WebApiGetAsync("https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList", data);
+            var unReadInfo = JsonConvert.DeserializeObject<LiveDynamicInfo>(str);
+            var liveCount = unReadInfo.data.count; // 只显示
+            if (liveCount != lastLiveCount)
+            {
+                lastLiveCount = liveCount;
+                new ToastContentBuilder()
+                .AddArgument("action", "直播动态")
+                .AddArgument("conversationId", 9814)
+                .AddText("哔哩哔哩精灵")
+                .AddText($"{liveCount} 位关注的UP正在直播！").Show();
+            }
         }
 
         /// <summary>
@@ -202,6 +261,7 @@ namespace BiliSpirit.ViewModels
         #endregion
 
         #region 启动浏览器
+
         public void JumpToVideo(VideoList video)
         {
             ExpolerHelper.OuterVisit(video.short_link);
@@ -209,6 +269,11 @@ namespace BiliSpirit.ViewModels
 
         public void JumpToHistory(HistoryList his)
         {
+            if (his.history.business == "live")
+            {
+                ExpolerHelper.OuterVisit($"https://live.bilibili.com/{his.history.oid}");
+                return;
+            }
             ExpolerHelper.OuterVisit($"https://www.bilibili.com/video/{his.history.bvid}");
         }
 
@@ -225,6 +290,11 @@ namespace BiliSpirit.ViewModels
         public void ViewDynamic()
         {
             ExpolerHelper.OuterVisit($"https://t.bilibili.com");
+        }
+
+        public void ViewLiveCenter()
+        {
+            ExpolerHelper.OuterVisit($"https://link.bilibili.com/p/center/index");
         }
 
         public void JumpToTarget(string target)
