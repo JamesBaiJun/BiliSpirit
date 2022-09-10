@@ -169,12 +169,22 @@
                         <TextBlock Text="热门" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="liveRad" Click="Button_Click" Checked="{DXEvent Handler='GetLive()'}">
-                    <StackPanel Orientation="Horizontal">
-                        <icon:PackIconMaterial Kind="Camera" Width="12"/>
-                        <TextBlock Text="直播" Margin="4 0 0 0"/>
-                    </StackPanel>
-                </RadioButton>
+                
+                <Grid>
+                    <RadioButton x:Name="liveRad" Click="Button_Click" Checked="{DXEvent Handler='GetLive()'}">
+                        <StackPanel Orientation="Horizontal">
+                            <icon:PackIconMaterial Kind="Camera" Width="12"/>
+                            <TextBlock Text="直播" Margin="4 0 0 0"/>
+                        </StackPanel>
+                    </RadioButton>
+
+                    <Border Background="{StaticResource PrimaryBlueColor}" Visibility="{DXBinding 'LiveCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}"
+                            Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16" MouseLeftButtonDown="{DXEvent Handler='ViewDynamic()'}"
+                            HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                        <TextBlock Text="{Binding LiveCount}" FontFamily="Microsoft YaHei Light" Foreground="White" HorizontalAlignment="Center" FontSize="8"/>
+                    </Border>
+                </Grid>
+             
                 <RadioButton x:Name="hisRad" Click="Button_Click" Checked="{DXEvent Handler='GetHistory()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Timer" Width="12"/>

@@ -213,15 +213,15 @@ namespace BiliSpirit.ViewModels
             data["page"] = "1";
             string str = await WebApiRequest.WebApiGetAsync("https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList", data);
             var unReadInfo = JsonConvert.DeserializeObject<LiveDynamicInfo>(str);
-            var liveCount = unReadInfo.data.count; // 只显示
-            if (liveCount != lastLiveCount)
+            LiveCount = unReadInfo.data.count; // 只显示
+            if (LiveCount != lastLiveCount)
             {
-                lastLiveCount = liveCount;
+                lastLiveCount = LiveCount;
                 new ToastContentBuilder()
                 .AddArgument("action", "直播动态")
                 .AddArgument("conversationId", 9814)
                 .AddText("哔哩哔哩精灵")
-                .AddText($"{liveCount} 位关注的UP正在直播！").Show();
+                .AddText($"{LiveCount} 位关注的UP正在直播！").Show();
             }
         }
 
@@ -250,6 +250,7 @@ namespace BiliSpirit.ViewModels
 
         public virtual int UnReadCount { get; set; }
         public virtual int UnReadDynamicCount { get; set; }
+        public virtual int LiveCount { get; set; }
 
         public virtual ObservableCollection<VideoList> HotVideoList { get; set; } = new ObservableCollection<VideoList>();
 
