@@ -16,7 +16,21 @@
         <dxmvvm:DispatcherService/>
     </dxmvvm:Interaction.Behaviors>
     <Grid>
-        <ItemsControl ItemsSource="{Binding DynamicVideoItems}" Margin="4 4 0 4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0 0 8 0">
+                <Button Style="{StaticResource IconButton}" Width="80" Command="{Binding RefreshContentCommand}">
+                    <StackPanel Orientation="Horizontal">
+                        <icon:PackIconMaterial Kind="Refresh" VerticalAlignment="Center" Height="14"/>
+                        <TextBlock Text="刷新动态" VerticalAlignment="Center" Margin="4 0 0 2"/>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding DynamicVideoItems}" Margin="4 4 0 4">
             <dxmvvm:Interaction.Behaviors>
                 <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
                     <com:FadeAnimateItemsBehavior.Animation>

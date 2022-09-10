@@ -27,14 +27,9 @@ namespace BiliSpirit.ViewModels
         public async void Loaded()
         {
             await GetAllDynamic();
-
-            Timer timer = new Timer();
-            timer.Interval = 30000;
-            timer.Elapsed += Timer_Elapsed;
-            timer.Start();
         }
 
-        private async void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        public async Task RefreshContent()
         {
             await GetAllDynamic();
         }

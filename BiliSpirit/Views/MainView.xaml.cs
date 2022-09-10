@@ -39,5 +39,10 @@ namespace BiliSpirit.Views
                 scolledTopGrid.Visibility = Visibility.Collapsed;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            AnimaScroll.ScrollToVerticalOffset(0);
+        }
     }
 }

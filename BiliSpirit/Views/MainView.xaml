@@ -23,7 +23,7 @@
         <Grid x:Name="topGrid" Height="120">
             <Image x:Name="topimage" Margin="-1 0" Source="{Binding TopImage,Converter={StaticResource imageConverter600Zip}}" RenderOptions.BitmapScalingMode="Fant" VerticalAlignment="Top">
             </Image>
-            <Border Height="90" Margin="8 4" Background="#E1FFFFFF" CornerRadius="8" Effect="{StaticResource BorderShadow}" VerticalAlignment="Bottom"/>
+            <Border Height="90" Margin="8 4" Background="#CEFFFFFF" CornerRadius="8" Effect="{StaticResource BorderShadow}" VerticalAlignment="Bottom"/>
 
             <Grid Margin="12 28 12 4" ShowGridLines="False">
                 <Grid.ColumnDefinitions>
@@ -57,15 +57,25 @@
                 </StackPanel>
 
                 <UniformGrid Grid.Column="2" Rows="2" Columns="3" Margin="0 0 4 16">
-                    <TextBlock Text="关注" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    <TextBlock Text="粉丝" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
-                    <TextBlock Text="动态" VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
+                    <UniformGrid.Resources>
+                        <Style TargetType="TextBlock">
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Foreground" Value="{StaticResource PrimaryBlueColor}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </UniformGrid.Resources>
+                    <TextBlock Text="关注" VerticalAlignment="Bottom" HorizontalAlignment="Center" MouseLeftButtonDown="{DXEvent Handler='JumpToTarget(@sender.Text)'}"/>
+                    <TextBlock Text="粉丝" VerticalAlignment="Bottom" HorizontalAlignment="Center" MouseLeftButtonDown="{DXEvent Handler='JumpToTarget(@sender.Text)'}"/>
+                    <TextBlock Text="动态" VerticalAlignment="Bottom" HorizontalAlignment="Center" MouseLeftButtonDown="{DXEvent Handler='JumpToTarget(@sender.Text)'}"/>
                     <TextBlock Text="{Binding UserStatData.following}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
                     <TextBlock Text="{Binding UserStatData.follower}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
                     <TextBlock Text="{Binding UserStatData.dynamic_count}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 4"/>
                 </UniformGrid>
 
-                <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
+                <Border Margin="4 0 4 -8" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}" 
+                        Background="{StaticResource PrimaryBlueColor}" CornerRadius="4" Padding="6 2" Height="20"
                     Grid.Column="2" HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseLeftButtonDown="{DXEvent Handler='ViewMessage()'}">
                     <TextBlock Text="{Binding UnReadCount}" Foreground="White" HorizontalAlignment="Center" FontSize="10"/>
                 </Border>
@@ -149,25 +159,25 @@
                     </RadioButton>
 
                     <Border Background="{StaticResource PrimaryBlueColor}" Visibility="{DXBinding 'UnReadCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}"
-                            Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16"
-                            HorizontalAlignment="Right" VerticalAlignment="Bottom" MouseLeftButtonDown="{DXEvent Handler='ViewMessage()'}">
+                            Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16" MouseLeftButtonDown="{DXEvent Handler='ViewDynamic()'}"
+                            HorizontalAlignment="Right" VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding UnReadDynamicCount}" FontFamily="Microsoft YaHei Light" Foreground="White" HorizontalAlignment="Center" FontSize="8"/>
                     </Border>
                 </Grid>
 
-                <RadioButton x:Name="hotRad" IsChecked="True" Checked="{DXEvent Handler='GetHots()'}">
+                <RadioButton x:Name="hotRad" IsChecked="True" Click="Button_Click" Checked="{DXEvent Handler='GetHots()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Fire"  Width="12"/>
                         <TextBlock Text="热门" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="liveRad"  Checked="{DXEvent Handler='GetLive()'}">
+                <RadioButton x:Name="liveRad" Click="Button_Click" Checked="{DXEvent Handler='GetLive()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Camera" Width="12"/>
                         <TextBlock Text="直播" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
-                <RadioButton x:Name="hisRad" Checked="{DXEvent Handler='GetHistory()'}">
+                <RadioButton x:Name="hisRad" Click="Button_Click" Checked="{DXEvent Handler='GetHistory()'}">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Timer" Width="12"/>
                         <TextBlock Text="历史" Margin="4 0 0 0"/>
@@ -177,12 +187,13 @@
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Horizontal" Margin="4" HorizontalAlignment="Right" Height="22">
-                <Button Command="{Binding RefreshDataCommand}" Style="{StaticResource IconButton}" ToolTip="刷新数据">
+                <Button Command="{Binding RefreshDataCommand}" Click="Button_Click" Style="{StaticResource IconButton}" ToolTip="刷新数据">
                     <icon:PackIconMaterial Kind="RefreshCircle" Width="16" Height="16"/>
                 </Button>
             </StackPanel>
 
-            <ScrollViewer Grid.Row="1" CanContentScroll="False" ScrollChanged="ScrollViewer_ScrollChanged" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
+            <com:AnimationScrollViewer x:Name="AnimaScroll" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling"
+                          Grid.Row="1" CanContentScroll="False" ScrollChanged="ScrollViewer_ScrollChanged" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
                 <Grid>
                     <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}">
@@ -221,7 +232,7 @@
 
                     <view:RecommendView Visibility="{Binding ElementName=recomRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" />
                 </Grid>
-            </ScrollViewer>
+            </com:AnimationScrollViewer>
         </Grid>
     </Grid>
 </UserControl>

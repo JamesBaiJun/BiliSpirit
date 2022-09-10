@@ -221,6 +221,29 @@ namespace BiliSpirit.ViewModels
         {
             ExpolerHelper.OuterVisit($"https://message.bilibili.com");
         }
+
+        public void ViewDynamic()
+        {
+            ExpolerHelper.OuterVisit($"https://t.bilibili.com");
+        }
+
+        public void JumpToTarget(string target)
+        {
+            switch (target)
+            {
+                case "关注":
+                    ExpolerHelper.OuterVisit($"https://space.bilibili.com/{SoftwareCache.LoginUser.data.mid}/fans/follow?spm_id_from=333.999.0.0");
+                    break;
+                case "粉丝":
+                    ExpolerHelper.OuterVisit($"https://space.bilibili.com/{SoftwareCache.LoginUser.data.mid}/fans/fans?spm_id_from=333.999.0.0");
+                    break;
+                case "动态":
+                    ExpolerHelper.OuterVisit($"https://space.bilibili.com/{SoftwareCache.LoginUser.data.mid}/dynamic?spm_id_from=333.999.0.0");
+                    break;
+                default:
+                    break;
+            }
+        }
         #endregion
     }
 }
