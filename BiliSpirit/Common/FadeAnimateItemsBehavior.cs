@@ -14,6 +14,9 @@ namespace BiliSpirit.Common
     public class FadeAnimateItemsBehavior : Behavior<ItemsControl>
     {
         public DoubleAnimation Animation { get; set; }
+
+        public ThicknessAnimation TaAnimation { get; set; }
+
         public TimeSpan Tick { get; set; }
 
         protected override void OnAttached()
@@ -41,7 +44,10 @@ namespace BiliSpirit.Common
                         {
                             var itemContainer = AssociatedObject.ItemContainerGenerator.ContainerFromItem(cce.NewItems[0]) as ContentPresenter;
                             if (itemContainer != null)
-                            itemContainer.BeginAnimation(ContentPresenter.OpacityProperty, Animation);
+                            {
+                                itemContainer.BeginAnimation(ContentPresenter.OpacityProperty, Animation);
+                                itemContainer.BeginAnimation(ContentPresenter.MarginProperty, TaAnimation);
+                            }
                         }
                     };
 
@@ -66,7 +72,11 @@ namespace BiliSpirit.Common
                 {
                     var item = enumerator.Current;
                     if (item != null)
+                    {
                         item.BeginAnimation(ListBoxItem.OpacityProperty, Animation);
+                        item.BeginAnimation(ListBoxItem.MarginProperty, TaAnimation);
+                    }
+
                     if (!enumerator.MoveNext())
                     {
                         timer.Stop();

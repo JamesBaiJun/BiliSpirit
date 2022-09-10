@@ -29,9 +29,9 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding RecommendItems}" Margin="4 0 0 4">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding RecommendItems}" Margin="4 0 0 0">
             <dxmvvm:Interaction.Behaviors>
-                <com:FadeAnimateItemsBehavior Tick="0:0:0.10">
+                <com:FadeAnimateItemsBehavior Tick="0:0:0.10" TaAnimation="{StaticResource ItemMoveAnimation}">
                     <com:FadeAnimateItemsBehavior.Animation>
                         <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
                     </com:FadeAnimateItemsBehavior.Animation>
@@ -44,17 +44,18 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Width="190" Height="180" Margin="8 8 8 8" Effect="{StaticResource BorderShadow}" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
+                    <Border Width="204" Height="200" Margin="4" Effect="{StaticResource BorderShadow}" Background="White" Padding="4 4 4 4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
-                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="50"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Image VerticalAlignment="Top" Margin="0" RenderOptions.BitmapScalingMode="Fant" Source="{Binding pic,Converter={StaticResource imageConverter200Zip}}">
+                            <Image x:Name="faceImage"  VerticalAlignment="Top" Margin="0" RenderOptions.BitmapScalingMode="Fant" 
+                                   Source="{Binding pic,Converter={StaticResource imageConverter200Zip}}">
                             </Image>
 
-                            <Border VerticalAlignment="Bottom" Background="#83000000">
+                            <Border VerticalAlignment="Bottom" Width="{Binding ElementName=faceImage,Path=ActualWidth}" Background="#83000000">
                                 <StackPanel Orientation="Horizontal" Margin="8 4">
                                     <icon:PackIconMaterial Foreground="White" Kind="PlayBox" Width="12" Height="12" VerticalAlignment="Center"/>
                                     <TextBlock Foreground="White" Text="{Binding stat.view,StringFormat={}{0}万}" Margin="4 0 0 0"/>

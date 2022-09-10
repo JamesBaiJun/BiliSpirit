@@ -38,7 +38,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="Button">
-                                            <Border x:Name="bd" Background="{TemplateBinding Background}">
+                                            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="0 0 8 8">
                                                 <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                             </Border>
                                             <ControlTemplate.Triggers>
@@ -59,7 +59,7 @@
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ToggleButton">
-                                            <Border x:Name="bd" Background="{TemplateBinding Background}">
+                                            <Border x:Name="bd" Background="{TemplateBinding Background}" CornerRadius="0 0 8 8">
                                                 <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
                                             </Border>
                                             <ControlTemplate.Triggers>

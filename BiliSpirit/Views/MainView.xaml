@@ -43,10 +43,8 @@
                            HorizontalAlignment="Right" Foreground="{StaticResource PrimaryGrayColor}" Width="13" Height="16" VerticalAlignment="Bottom"/>
                 </Grid>
 
-                <StackPanel Grid.Column="1" Margin="4" 
-                        Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="{Binding LoginUser.data.name}" FontSize="16" Foreground="{StaticResource PrimaryPinkColor}"/>
-
+                <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <TextBlock Text="{Binding LoginUser.data.name}" FontSize="18" Foreground="{StaticResource PrimaryPinkColor}"/>
 
                     <Border Background="{StaticResource PrimaryPinkColor}" CornerRadius="4"
                             Padding="4 2 4 4" Margin="4" HorizontalAlignment="Center">
@@ -192,13 +190,13 @@
                 </Button>
             </StackPanel>
 
-            <com:AnimationScrollViewer x:Name="AnimaScroll" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling"
-                          Grid.Row="1" CanContentScroll="False" ScrollChanged="ScrollViewer_ScrollChanged" Margin="0 0 0 8" Style="{StaticResource for_scrollviewer}">
+            <com:AnimationScrollViewer x:Name="AnimaScroll" ScrollViewer.VerticalScrollBarVisibility="Hidden" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Recycling"
+                          Grid.Row="1" CanContentScroll="False" ScrollChanged="ScrollViewer_ScrollChanged" Margin="0 0 0 4" Style="{StaticResource for_scrollviewer}">
                 <Grid>
                     <ItemsControl Visibility="{Binding ElementName=hotRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HotVideoList}" ItemTemplate="{StaticResource VideoTemplate}">
                         <dxmvvm:Interaction.Behaviors>
-                            <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                            <com:FadeAnimateItemsBehavior Tick="0:0:0.1" TaAnimation="{StaticResource ItemMoveAnimation}">
                                 <com:FadeAnimateItemsBehavior.Animation>
                                     <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
                                 </com:FadeAnimateItemsBehavior.Animation>
@@ -209,7 +207,7 @@
                     <ItemsControl Visibility="{Binding ElementName=liveRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding LiveList}" ItemTemplate="{StaticResource LiveTemplate}">
                         <dxmvvm:Interaction.Behaviors>
-                            <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                            <com:FadeAnimateItemsBehavior Tick="0:0:0.1" TaAnimation="{StaticResource ItemMoveAnimation}">
                                 <com:FadeAnimateItemsBehavior.Animation>
                                     <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
                                 </com:FadeAnimateItemsBehavior.Animation>
@@ -220,7 +218,7 @@
                     <ItemsControl Visibility="{Binding ElementName=hisRad, Path=IsChecked, Converter={dxmvvm:BooleanToVisibilityConverter}}" 
                               Margin="4" ItemsSource="{Binding HistoryList}" ItemTemplate="{StaticResource HistoryTemplate}">
                         <dxmvvm:Interaction.Behaviors>
-                            <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                            <com:FadeAnimateItemsBehavior Tick="0:0:0.1" TaAnimation="{StaticResource ItemMoveAnimation}">
                                 <com:FadeAnimateItemsBehavior.Animation>
                                     <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
                                 </com:FadeAnimateItemsBehavior.Animation>

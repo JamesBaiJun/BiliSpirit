@@ -30,9 +30,9 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding DynamicVideoItems}" Margin="4 4 0 4">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding DynamicVideoItems}" Margin="4" >
             <dxmvvm:Interaction.Behaviors>
-                <com:FadeAnimateItemsBehavior Tick="0:0:0.05">
+                <com:FadeAnimateItemsBehavior Tick="0:0:0.05" TaAnimation="{StaticResource ItemMoveAnimation}">
                     <com:FadeAnimateItemsBehavior.Animation>
                         <DoubleAnimation From="0" To="1" Duration="0:0:0.3"/>
                     </com:FadeAnimateItemsBehavior.Animation>
@@ -40,7 +40,7 @@
             </dxmvvm:Interaction.Behaviors>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Border Margin="4 4 16 4" Height="140" Effect="{StaticResource BorderShadow}" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
+                    <Border Margin="4" Height="140" Effect="{StaticResource BorderShadow}" Background="White" Padding="4" CornerRadius="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="60"/>

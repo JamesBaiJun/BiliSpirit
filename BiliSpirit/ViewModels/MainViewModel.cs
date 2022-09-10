@@ -33,7 +33,7 @@ namespace BiliSpirit.ViewModels
             await RefreshData();
 
             Timer timer = new Timer();
-            timer.Interval = 60000;
+            timer.Interval = 20000;
             timer.Elapsed += Timer_Elapsed;
             timer.Start();
         }
@@ -163,7 +163,7 @@ namespace BiliSpirit.ViewModels
             data["video_offset"] = "703911862525231100";
             string str = await WebApiRequest.WebApiGetAsync("https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/web_homepage", data);
             var unReadInfo = JsonConvert.DeserializeObject<NewDynamicInfo>(str);
-            UnReadDynamicCount = unReadInfo.data.alltype_num;
+            UnReadDynamicCount = unReadInfo.data.video_num; // 只显示
         }
 
         /// <summary>

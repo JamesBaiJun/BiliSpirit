@@ -12,7 +12,13 @@
     <converter:ImageZipConverter x:Key="imageConverterZip"/>
     <converter:ImageZipConverter x:Key="imageConverter200Zip" Pixel="200"/>
     <converter:ImageZipConverter x:Key="imageConverter600Zip" Pixel="600"/>
-    <DropShadowEffect x:Key="BorderShadow" ShadowDepth="0" BlurRadius="8" Color="#78D0D0D0"/>
+    <DropShadowEffect x:Key="BorderShadow" ShadowDepth="0" BlurRadius="8" Color="#63C3C3C3"/>
+
+    <ThicknessAnimation x:Key="ItemMoveAnimation" From="32 0 0 0" To="0" Duration="0:0:0.3">
+        <ThicknessAnimation.EasingFunction>
+            <CubicEase EasingMode="EaseOut"/>
+        </ThicknessAnimation.EasingFunction>
+    </ThicknessAnimation>
 
     <Style x:Key="IconButton" TargetType="Button">
         <Setter Property="Width" Value="22" />
@@ -36,7 +42,7 @@
     </Style>
 
     <DataTemplate x:Key="VideoTemplate">
-        <Border x:Name="bd" Margin="4 4 12 4" Height="92" Effect="{StaticResource BorderShadow}" CornerRadius="4" Background="White" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
+        <Border x:Name="bd" Margin="4" Height="92" Effect="{StaticResource BorderShadow}" CornerRadius="4" Background="White" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToVideo(@sender.DataContext)'}">
             <Grid Margin="4 6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
@@ -80,7 +86,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="HistoryTemplate">
-        <Border x:Name="bd" Height="92" Background="White" Effect="{StaticResource BorderShadow}" CornerRadius="4" Margin="4 4 12 4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToHistory(@sender.DataContext)'}">
+        <Border x:Name="bd" Height="92" Background="White" Effect="{StaticResource BorderShadow}" CornerRadius="4" Margin="4" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToHistory(@sender.DataContext)'}">
             <Grid Margin="4 6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
@@ -122,7 +128,7 @@
 
 
     <DataTemplate x:Key="LiveTemplate">
-        <Border x:Name="bd" Background="White" Height="92" CornerRadius="4" Margin="4 4 12 4" Effect="{StaticResource BorderShadow}" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToLive(@sender.DataContext)'}">
+        <Border x:Name="bd" Background="White" Height="92" CornerRadius="4" Margin="4" Effect="{StaticResource BorderShadow}" MouseLeftButtonDown="{DXEvent Handler='@a($UserControl).DataContext.JumpToLive(@sender.DataContext)'}">
             <Grid Margin="4 6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
