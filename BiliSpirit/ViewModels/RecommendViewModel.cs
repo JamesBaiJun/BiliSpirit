@@ -49,7 +49,7 @@ namespace BiliSpirit.ViewModels
             data["fresh_idx"] = "2";
             data["brush"] = "0";
             data["homepage_ver"] = "1";
-            data["ps"] = "11";
+            data["ps"] = "10";
 
             try
             {

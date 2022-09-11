@@ -319,6 +319,9 @@ namespace BiliSpirit.ViewModels
                 case "动态":
                     ExpolerHelper.OuterVisit($"https://space.bilibili.com/{SoftwareCache.LoginUser.data.mid}/dynamic?spm_id_from=333.999.0.0");
                     break;
+                case "主页":
+                    ExpolerHelper.OuterVisit($"https://space.bilibili.com/{SoftwareCache.LoginUser.data.mid}");
+                    break;
                 default:
                     break;
             }

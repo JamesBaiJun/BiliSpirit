@@ -32,7 +32,8 @@
                     <ColumnDefinition Width="2*"/>
                 </Grid.ColumnDefinitions>
                 <Grid>
-                    <Image Source="{Binding LoginUser.data.face}" Width="80" Height="80" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill">
+                    <Image Source="{Binding LoginUser.data.face}" MouseLeftButtonDown="{DXEvent Handler='JumpToTarget(`主页`)'}" ToolTip="进入主页"
+                           Width="80" Height="80" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill">
                         <Image.Clip>
                             <EllipseGeometry Center="40,40" RadiusX="38" RadiusY="38"/>
                         </Image.Clip>
