@@ -65,7 +65,7 @@ namespace BiliSpirit.Models
         public bool? following { get; set; }
         public string jump_url { get; set; }
         public string label { get; set; }
-        public int mid { get; set; }
+        public string mid { get; set; }
         public string name { get; set; }
         public Official_Verify official_verify { get; set; }
         public DynamicVideoPendant pendant { get; set; }

@@ -46,7 +46,7 @@ namespace BiliSpirit.Models
         public int videos { get; set; }
         public string author_name { get; set; }
         public string author_face { get; set; }
-        public int author_mid { get; set; }
+        public string author_mid { get; set; }
         public int view_at { get; set; }
         public int progress { get; set; }
         public string badge { get; set; }

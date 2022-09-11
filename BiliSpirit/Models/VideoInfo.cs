@@ -75,7 +75,7 @@ namespace BiliSpirit.Models
 
     public class Owner
     {
-        public int mid { get; set; }
+        public string mid { get; set; }
         public string name { get; set; }
         public string face { get; set; }
     }

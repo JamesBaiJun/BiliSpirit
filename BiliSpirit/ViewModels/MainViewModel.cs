@@ -55,7 +55,7 @@ namespace BiliSpirit.ViewModels
                 catch (Exception)
                 {
                 }
-            
+
             };
 
             Timer timer = new Timer();
@@ -66,17 +66,25 @@ namespace BiliSpirit.ViewModels
 
         public async Task RefreshData()
         {
-            IsRefreshing = true;
-            await Task.Delay(50);
-            await GetStat();
-            await GetUnReadMessage();
-            await GetUnReadDynamic();
-            await GetLiveDynamic();
+            try
+            {
+                IsRefreshing = true;
+                await Task.Delay(50);
+                await GetStat();
+                await GetUnReadMessage();
+                await GetUnReadDynamic();
+                await GetLiveDynamic();
 
-            await GetHots();
-            await GetHistory();
-            await GetLive();
-            IsRefreshing = false;
+                await GetHots();
+                await GetHistory();
+                await GetLive();
+                IsRefreshing = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "发生错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
 
         private async void Timer_Elapsed(object sender, ElapsedEventArgs e)

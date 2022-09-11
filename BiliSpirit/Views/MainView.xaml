@@ -179,7 +179,7 @@
                     </RadioButton>
 
                     <Border Background="{StaticResource PrimaryBlueColor}" Visibility="{DXBinding 'LiveCount!=0',Converter={dxmvvm:BooleanToVisibilityConverter}}"
-                            Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16" MouseLeftButtonDown="{DXEvent Handler='ViewDynamic()'}"
+                            Margin="0 0 -2 3" CornerRadius="8" Padding="2 2" Height="16" Width="16"
                             HorizontalAlignment="Right" VerticalAlignment="Bottom">
                         <TextBlock Text="{Binding LiveCount}" FontFamily="Microsoft YaHei Light" Foreground="White" HorizontalAlignment="Center" FontSize="8"/>
                     </Border>
