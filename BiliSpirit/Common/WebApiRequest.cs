@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Security;
+using System.Windows;
 
 namespace BiliSpirit.Common
 {
@@ -33,8 +34,16 @@ namespace BiliSpirit.Common
                         msg.Headers.Add("Cookie", SoftwareCache.CookieString);//cookie:SESSDATA=***
                     }
 
-                    var result = httpclient.SendAsync(msg).Result;
-                    content = result.Content.ReadAsStringAsync().Result;
+                    try
+                    {
+                        var result = httpclient.SendAsync(msg).Result;
+                        content = result.Content.ReadAsStringAsync().Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"网络错误:{ex.Message}！", "提示");
+                    }
+
                 }
                 return content;
             });
@@ -71,8 +80,15 @@ namespace BiliSpirit.Common
                         msg.Headers.Add("Cookie", SoftwareCache.CookieString);//cookie:SESSDATA=***
                     }
 
-                    var result = httpclient.SendAsync(msg).Result;
-                    content = result.Content.ReadAsStringAsync().Result;
+                    try
+                    {
+                        var result = httpclient.SendAsync(msg).Result;
+                        content = result.Content.ReadAsStringAsync().Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"网络错误:{ex.Message}！", "提示");
+                    }
                 }
                 return content;
             });

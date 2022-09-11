@@ -14,18 +14,24 @@
         BorderBrush="Gray" 
         UseLayoutRounding="True"
         xmlns:icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        Icon=".\icon.ico"
-        BorderThickness="1" Loaded="Window_Loaded">
-    <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Image Source="Images/bilibili.png" Width="100" Margin="0 0 0 20" RenderOptions.BitmapScalingMode="Fant"/>
-            <TextBlock Text="请扫描二维码登录" HorizontalAlignment="Center" FontSize="14" 
-                       Foreground="{StaticResource PrimaryPinkColor}"/>
+        Icon=".\icon.ico" Loaded="Window_Loaded" AllowsTransparency="True" Background="Transparent">
+    <Border Margin="8" CornerRadius="8" Background="White" Effect="{StaticResource BorderShadow}">
+        <Grid MouseLeftButtonDown="Grid_MouseLeftButtonDown" Background="Transparent">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Image Source="Images/bilibili.png" Width="80" Margin="0 0 0 20" RenderOptions.BitmapScalingMode="Fant"/>
+                <TextBlock TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" FontSize="14" 
+                       Foreground="{StaticResource PrimaryPinkColor}" FontFamily="{StaticResource YuanTi}">
+                    <Run Text="请使用哔哩哔哩APP"/>
+                    <LineBreak/>
+                    <Run Text="扫描二维码登录"/>
+                </TextBlock>
 
-            <Image x:Name="QrImage" Width="150" Height="150"/>
+                <Image x:Name="QrImage" Width="150" Height="150"/>
 
-            <icon:PackIconMaterial Kind="Refresh" Background="Transparent" MouseDown="PackIconMaterial_MouseDown" 
-                                   HorizontalAlignment="Center"  Foreground="{StaticResource PrimaryPinkColor}"/>
-        </StackPanel>
-    </Grid>
+                <icon:PackIconMaterial Kind="Refresh" ToolTip="刷新二维码" Background="Transparent" 
+                                       MouseDown="PackIconMaterial_MouseDown" 
+                                       HorizontalAlignment="Center"  Foreground="{StaticResource PrimaryBlueColor}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>

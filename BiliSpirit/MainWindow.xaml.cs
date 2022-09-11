@@ -82,7 +82,10 @@ namespace BiliSpirit
 
             string url = JsonHelper.GetJsonValue(str, "url");
             qrcode_key = JsonHelper.GetJsonValue(str, "qrcode_key");
-            QrImage.Source = QRCode.CreateQRCode(url, 150, 150);
+            Dispatcher.Invoke(() =>
+            {
+                QrImage.Source = QRCode.CreateQRCode(url, 150, 150);
+            });
         }
 
         private void Grid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

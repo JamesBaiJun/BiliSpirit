@@ -25,6 +25,11 @@ namespace BiliSpirit
         private async void Login()
         {
             var info = await WebApiRequest.WebApiGetAsync("http://api.bilibili.com/x/space/myinfo");
+            if (info == null)
+            {
+                Shutdown();
+                return;
+            }
             if (JsonHelper.GetJsonValue(info, "code") == "0")
             {
                 SoftwareCache.LoginUser = JsonConvert.DeserializeObject<LoginUser>(info);
