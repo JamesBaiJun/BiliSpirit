@@ -60,5 +60,13 @@ namespace BiliSpirit
         {
             Topmost = (bool)miniBtn.IsChecked;
         }
+
+        private void sideBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SideWindow side = new SideWindow();
+            side.Owner = this;
+            side.Show();
+            Hide();
+        }
     }
 }

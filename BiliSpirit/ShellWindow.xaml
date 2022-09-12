@@ -77,17 +77,21 @@
                                 </Setter>
                             </Style>
                         </StackPanel.Resources>
-                        <ToggleButton x:Name="miniBtn" Click="miniBtn_Click">
+                        
+                        <Button x:Name="sideBtn" Click="sideBtn_Click" ToolTip="侧边栏模式">
+                            <icon:PackIconMaterial Kind="Collage" Margin="4" Width="12"/>
+                        </Button>
+
+                        <ToggleButton x:Name="miniBtn" Click="miniBtn_Click" ToolTip="置顶">
                             <icon:PackIconMaterial Kind="PinOutline" Margin="4" Width="7"/>
                         </ToggleButton>
-                        <Button x:Name="minBtn" Click="minBtn_Click">
+                        <Button x:Name="minBtn" Click="minBtn_Click" ToolTip="最小化">
                             <icon:PackIconMaterial Kind="Minus" Margin="4" Width="12"/>
                         </Button>
-                        <Button x:Name="cloBtn" Click="cloBtn_Click">
+                        <Button x:Name="cloBtn" Click="cloBtn_Click" ToolTip="退出程序">
                             <icon:PackIconMaterial Kind="Close" Margin="4" Width="12"/>
                         </Button>
                     </StackPanel>
-
                 </Grid>
             </Border>
         </Border>
