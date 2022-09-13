@@ -8,6 +8,12 @@
     <ApplicationIcon>icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="image\**" />
+    <EmbeddedResource Remove="image\**" />
+    <None Remove="image\**" />
+    <Page Remove="image\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove="ResourceHanRoundedCN-Medium.ttf" />
   </ItemGroup>
   <ItemGroup>
