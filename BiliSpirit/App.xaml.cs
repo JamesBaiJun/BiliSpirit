@@ -24,6 +24,7 @@ namespace BiliSpirit
 
         private async void Login()
         {
+            // 测试
             var info = await WebApiRequest.WebApiGetAsync("http://api.bilibili.com/x/space/myinfo");
             if (info == null)
             {
