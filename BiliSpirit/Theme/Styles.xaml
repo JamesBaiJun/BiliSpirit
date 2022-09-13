@@ -15,7 +15,7 @@
     <converter:ImageZipConverter x:Key="imageConverterZip"/>
     <converter:ImageZipConverter x:Key="imageConverter200Zip" Pixel="200"/>
     <converter:ImageZipConverter x:Key="imageConverter600Zip" Pixel="600"/>
-    <DropShadowEffect x:Key="BorderShadow" ShadowDepth="0" BlurRadius="8" Color="#63C3C3C3"/>
+    <DropShadowEffect x:Key="BorderShadow" ShadowDepth="2" BlurRadius="10" Color="#7BB8B8B8"/>
 
     <ThicknessAnimation x:Key="ItemMoveAnimation" From="32 0 -32 0" To="0" Duration="0:0:0.3">
         <ThicknessAnimation.EasingFunction>

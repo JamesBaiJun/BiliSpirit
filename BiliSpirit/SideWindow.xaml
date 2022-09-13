@@ -19,7 +19,7 @@
         <dxmvvm:DispatcherService />
     </dxmvvm:Interaction.Behaviors>
     <Grid>
-        <Border CornerRadius="8" Padding="4 12" Background="#F1FFFFFF" Margin="0 12" BorderThickness="1" BorderBrush="{StaticResource PrimaryGrayColor}">
+        <Border CornerRadius="8" Padding="4 12" Background="White" Margin="0 12" BorderThickness="1" BorderBrush="{StaticResource PrimaryPinkColor}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -40,9 +40,9 @@
                         <ItemsControl Margin="0" ItemsSource="{Binding HotVideoList}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border x:Name="bd" Margin="4" Width="150" CornerRadius="4" Background="White" Effect="{StaticResource BorderShadow}" BorderBrush="LightGray"
+                                    <Border x:Name="bd" Margin="4" Width="150" Height="94" CornerRadius="4" Effect="{StaticResource BorderShadow}" BorderBrush="LightGray"
                                             MouseLeftButtonDown="{DXEvent Handler='@a($Window).DataContext.JumpToVideo(@sender.DataContext)'}">
-                                        <Grid Margin="8">
+                                        <Grid>
                                             <Image ToolTip="{Binding title}" Source="{Binding pic, Converter={StaticResource imageConverter200Zip}}" 
                                                    RenderOptions.BitmapScalingMode="Fant" com:ImageRadius.CornerRadius="4"/>
 
@@ -68,6 +68,7 @@
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation Duration="0:0:0.15" To="200" Storyboard.TargetName="bd" Storyboard.TargetProperty="Width"/>
+                                                        <DoubleAnimation Duration="0:0:0.15" To="126" Storyboard.TargetName="bd" Storyboard.TargetProperty="Height"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </Trigger.EnterActions>
@@ -75,6 +76,7 @@
                                                 <BeginStoryboard>
                                                     <Storyboard>
                                                         <DoubleAnimation Duration="0:0:0.35" To="150" Storyboard.TargetName="bd" Storyboard.TargetProperty="Width"/>
+                                                        <DoubleAnimation Duration="0:0:0.35" To="94" Storyboard.TargetName="bd" Storyboard.TargetProperty="Height"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </Trigger.ExitActions>
