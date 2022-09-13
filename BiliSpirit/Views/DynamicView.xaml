@@ -63,13 +63,13 @@
                                         <Run Text="{Binding modules.module_author.pub_action}"/>
                                     </TextBlock>
                                 </DockPanel>
-                                <Border Margin="0 4" BorderBrush="{StaticResource PrimaryGrayColor}" BorderThickness="1">
+                                <Border Margin="0 4" CornerRadius="4" BorderBrush="{StaticResource PrimaryGrayColor}" BorderThickness="1">
                                     <Grid ClipToBounds="True">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
-                                        <Image Width="120" HorizontalAlignment="Left" Source="{Binding modules.module_dynamic.major.archive.cover,Converter={StaticResource imageConverterZip}}"/>
+                                        <Image Width="120" com:ImageRadius.CornerRadius="4" HorizontalAlignment="Left" Source="{Binding modules.module_dynamic.major.archive.cover,Converter={StaticResource imageConverterZip}}"/>
                                         <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                                     VerticalAlignment="Bottom" HorizontalAlignment="Right" Foreground="#BBFFFFFF" Margin="24 8"/>
 

@@ -51,7 +51,7 @@
                                 <RowDefinition Height="50"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Image x:Name="faceImage"  VerticalAlignment="Top" Margin="0" RenderOptions.BitmapScalingMode="Fant" 
+                            <Image x:Name="faceImage" com:ImageRadius.CornerRadius="4" VerticalAlignment="Top" Margin="0" RenderOptions.BitmapScalingMode="Fant" 
                                    Source="{Binding pic,Converter={StaticResource imageConverter200Zip}}">
                             </Image>
 

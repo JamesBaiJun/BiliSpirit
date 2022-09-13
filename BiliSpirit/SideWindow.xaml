@@ -19,7 +19,7 @@
         <dxmvvm:DispatcherService />
     </dxmvvm:Interaction.Behaviors>
     <Grid>
-        <Border CornerRadius="8 0 0 8" Padding="4 12" Background="#DEFFFFFF" Effect="{StaticResource BorderShadow}">
+        <Border CornerRadius="8" Padding="4 12" Background="#F1FFFFFF" Margin="0 12" BorderThickness="1" BorderBrush="{StaticResource PrimaryGrayColor}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -33,27 +33,27 @@
                         <icon:PackIconMaterial Kind="RefreshCircle" Width="14"/>
                     </Button>
                 </StackPanel>
-               
+
 
                 <Grid Grid.Column="1">
                     <ScrollViewer x:Name="scroll" VerticalScrollBarVisibility="Hidden" HorizontalContentAlignment="Center">
                         <ItemsControl Margin="0" ItemsSource="{Binding HotVideoList}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border x:Name="bd" Margin="4" Width="150" Effect="{StaticResource BorderShadow}" CornerRadius="4" Background="White" 
+                                    <Border x:Name="bd" Margin="4" Width="150" CornerRadius="4" Background="White" Effect="{StaticResource BorderShadow}" BorderBrush="LightGray"
                                             MouseLeftButtonDown="{DXEvent Handler='@a($Window).DataContext.JumpToVideo(@sender.DataContext)'}">
                                         <Grid Margin="8">
                                             <Image ToolTip="{Binding title}" Source="{Binding pic, Converter={StaticResource imageConverter200Zip}}" 
-                                                   RenderOptions.BitmapScalingMode="Fant"/>
+                                                   RenderOptions.BitmapScalingMode="Fant" com:ImageRadius.CornerRadius="4"/>
 
-                                            <Grid Background="#BB595959" VerticalAlignment="Bottom">
+                                            <Border Background="#BB595959" CornerRadius="4" VerticalAlignment="Bottom">
                                                 <TextBlock Text="{Binding owner.name}" VerticalAlignment="Bottom" Margin="4" Foreground="White"/>
-                                            </Grid>
+                                            </Border>
 
-                                            <Grid x:Name="BigTitle" Background="#BB595959">
+                                            <Border x:Name="BigTitle" CornerRadius="4" Background="#BB595959">
                                                 <TextBlock Text="{Binding title}" TextWrapping="Wrap" Margin="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Grid>
-                                            
+                                            </Border>
+
                                             <icon:PackIconMaterial x:Name="play" Kind="PlayCircle" Width="24" Height="24" 
                                                                    VerticalAlignment="Top" HorizontalAlignment="Right" 
                                                                    Foreground="#BBFFFFFF" Margin="8"/>
@@ -74,7 +74,7 @@
                                             <Trigger.ExitActions>
                                                 <BeginStoryboard>
                                                     <Storyboard>
-                                                        <DoubleAnimation Duration="0:0:0.25" To="150" Storyboard.TargetName="bd" Storyboard.TargetProperty="Width"/>
+                                                        <DoubleAnimation Duration="0:0:0.35" To="150" Storyboard.TargetName="bd" Storyboard.TargetProperty="Width"/>
                                                     </Storyboard>
                                                 </BeginStoryboard>
                                             </Trigger.ExitActions>

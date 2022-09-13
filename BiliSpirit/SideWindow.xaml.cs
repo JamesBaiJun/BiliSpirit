@@ -50,7 +50,7 @@ namespace BiliSpirit
 
         private void Window_MouseLeave(object sender, MouseEventArgs e)
         {
-            DoubleAnimation da = new DoubleAnimation(SystemParameters.WorkArea.Width - 30, new Duration(TimeSpan.FromMilliseconds(250)));
+            DoubleAnimation da = new DoubleAnimation(SystemParameters.WorkArea.Width - 20, new Duration(TimeSpan.FromMilliseconds(250)));
             BeginAnimation(LeftProperty, da);
             DoubleAnimation daOpacity = new DoubleAnimation(0.2, new Duration(TimeSpan.FromMilliseconds(250)));
             BeginAnimation(OpacityProperty, daOpacity);
