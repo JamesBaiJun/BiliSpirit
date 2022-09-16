@@ -11,6 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="{DXEvent Handler='Loaded()'}"
+             FontFamily="{StaticResource YuanTi}"
              DataContext="{dxmvvm:ViewModelSource Type=vm:DynamicViewModel}">
     <dxmvvm:Interaction.Behaviors>
         <dxmvvm:DispatcherService/>

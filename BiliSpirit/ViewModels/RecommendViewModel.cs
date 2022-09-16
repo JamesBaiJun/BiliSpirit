@@ -56,7 +56,7 @@ namespace BiliSpirit.ViewModels
                 string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/web-interface/index/top/feed/rcmd", data);
                 var test = JsonConvert.DeserializeObject<RecommendInfo>(str);
 
-                await DynamicLoad(test.data.item, RecommendItems);
+                await LoadHelper.DynamicLoad(DispatcherService, test.data.item, RecommendItems);
             }
             catch (Exception)
             {
@@ -74,21 +74,5 @@ namespace BiliSpirit.ViewModels
         }
 
         protected IDispatcherService DispatcherService { get { return this.GetService<IDispatcherService>(); } }
-
-        /// <summary>
-        /// 动态加载列表数据
-        /// </summary>
-        private async Task DynamicLoad<T>(Array array, ObservableCollection<T> target) where T : class
-        {
-            await DispatcherService.BeginInvoke(new Action(async () =>
-            {
-                target.Clear();
-                foreach (var item in array)
-                {
-                    target.Add(item as T);
-                    await Task.Delay(20);
-                }
-            }));
-        }
     }
 }

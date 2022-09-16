@@ -47,7 +47,7 @@ namespace BiliSpirit.ViewModels
             string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all", data);
             var test = JsonConvert.DeserializeObject<DynamicVideoInfo>(str);
 
-            await DynamicLoad(test.data.items, DynamicVideoItems);
+            await LoadHelper.DynamicLoad(DispatcherService, test.data.items, DynamicVideoItems);
         }
 
         /// <summary>
@@ -57,22 +57,6 @@ namespace BiliSpirit.ViewModels
         public void JumpToVideo(DynamicVideoItem videoItem)
         {
             ExpolerHelper.OuterVisit("https:" + videoItem.modules.module_dynamic.major.archive.jump_url);
-        }
-
-        /// <summary>
-        /// 动态加载列表数据
-        /// </summary>
-        private async Task DynamicLoad<T>(Array array, ObservableCollection<T> target) where T : class
-        {
-            await DispatcherService.BeginInvoke(new Action(async () =>
-            {
-                target.Clear();
-                foreach (var item in array)
-                {
-                    target.Add(item as T);
-                    await Task.Delay(20);
-                }
-            }));
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BiliSpirit.Common;
 using BiliSpirit.Models;
+using BiliSpirit.Views;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
@@ -13,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using Windows.Foundation.Collections;
@@ -30,8 +32,10 @@ namespace BiliSpirit.ViewModels
             LoginUser = SoftwareCache.LoginUser;
         }
 
-        public async void Loaded()
+        Frame frameContainer;
+        public async void Loaded(Frame frame)
         {
+            frameContainer = frame;
             await GetTopImage();
             await RefreshData();
 
@@ -58,6 +62,8 @@ namespace BiliSpirit.ViewModels
 
             };
 
+            Navigate("动态");
+
             Timer timer = new Timer();
             timer.Interval = 20000;
             timer.Elapsed += Timer_Elapsed;
@@ -76,8 +82,6 @@ namespace BiliSpirit.ViewModels
                 await GetLiveDynamic();
 
                 await GetHots();
-                await GetHistory();
-                await GetLive();
                 IsRefreshing = false;
             }
             catch (Exception ex)
@@ -93,6 +97,30 @@ namespace BiliSpirit.ViewModels
             await GetUnReadMessage();
             await GetUnReadDynamic();
             await GetLiveDynamic();
+        }
+
+        public void Navigate(string target)
+        {
+            switch (target)
+            {
+                case "推荐":
+                    frameContainer.Navigate(new RecommendView());
+                    break;
+                case "动态":
+                    frameContainer.Navigate(new DynamicView());
+                    break;
+                case "热门":
+                    frameContainer.Navigate(new HotVideoView());
+                    break;
+                case "直播":
+                    frameContainer.Navigate(new LiveView());
+                    break;
+                case "历史":
+                    frameContainer.Navigate(new HistoryVideo());
+                    break;
+                default:
+                    break;
+            }
         }
 
         #region Web请求
@@ -120,56 +148,7 @@ namespace BiliSpirit.ViewModels
             string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/web-interface/popular", data);
             var test = JsonConvert.DeserializeObject<VideoInfo>(str);
 
-            await DynamicLoad(test.data.list, HotVideoList);
-        }
-
-        /// <summary>
-        /// 获取历史记录
-        /// </summary>
-        /// <returns></returns>
-        public async Task GetHistory()
-        {
-            HistoryList.Clear();
-            await Task.Delay(50);
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            data["ps"] = "30";
-            string str = await WebApiRequest.WebApiGetAsync("http://api.bilibili.com/x/web-interface/history/cursor", data);
-            var test = JsonConvert.DeserializeObject<HistoryInfo>(str);
-
-            await DynamicLoad(test.data.list, HistoryList);
-        }
-
-        /// <summary>
-        /// 获取直播动态
-        /// </summary>
-        /// <returns></returns>
-        public async Task GetLive()
-        {
-            LiveList.Clear();
-            await Task.Delay(50);
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            data["page"] = "1";
-            data["pagesize"] = "10";
-            string str = await WebApiRequest.WebApiGetAsync("https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/FeedList", data);
-            var test = JsonConvert.DeserializeObject<LiveInfo>(str);
-
-            await DynamicLoad(test.data.list, LiveList);
-        }
-
-        /// <summary>
-        /// 动态加载列表数据
-        /// </summary>
-        private async Task DynamicLoad<T>(Array array, ObservableCollection<T> target) where T : class
-        {
-            await DispatcherService.BeginInvoke(new Action(async () =>
-            {
-                target.Clear();
-                foreach (var item in array)
-                {
-                    target.Add(item as T);
-                    await Task.Delay(20);
-                }
-            }));
+            await LoadHelper.DynamicLoad(DispatcherService, test.data.list, HotVideoList);
         }
 
         /// <summary>
@@ -262,11 +241,7 @@ namespace BiliSpirit.ViewModels
 
         public virtual ObservableCollection<VideoList> HotVideoList { get; set; } = new ObservableCollection<VideoList>();
 
-        public virtual ObservableCollection<HistoryList> HistoryList { get; set; } = new ObservableCollection<HistoryList>();
-
         public virtual bool IsRefreshing { get; set; }
-
-        public virtual ObservableCollection<LiveList> LiveList { get; set; } = new ObservableCollection<LiveList>();
         #endregion
 
         #region 启动浏览器
