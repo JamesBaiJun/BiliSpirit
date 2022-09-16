@@ -44,5 +44,10 @@ namespace BiliSpirit.ViewModels
 
             await LoadHelper.DynamicLoad(DispatcherService, test.data.list, HotVideoList);
         }
+
+        public void JumpToVideo(VideoList video)
+        {
+            ExpolerHelper.OuterVisit(video.short_link);
+        }
     }
 }

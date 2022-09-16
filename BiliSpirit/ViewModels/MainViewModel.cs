@@ -251,21 +251,6 @@ namespace BiliSpirit.ViewModels
             ExpolerHelper.OuterVisit(video.short_link);
         }
 
-        public void JumpToHistory(HistoryList his)
-        {
-            if (his.history.business == "live")
-            {
-                ExpolerHelper.OuterVisit($"https://live.bilibili.com/{his.history.oid}");
-                return;
-            }
-            ExpolerHelper.OuterVisit($"https://www.bilibili.com/video/{his.history.bvid}");
-        }
-
-        public void JumpToLive(LiveList live)
-        {
-            ExpolerHelper.OuterVisit($"https://live.bilibili.com/{live.roomid}?broadcast_type=1");
-        }
-
         public void ViewMessage()
         {
             ExpolerHelper.OuterVisit($"https://message.bilibili.com");

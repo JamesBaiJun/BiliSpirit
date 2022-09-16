@@ -45,5 +45,10 @@ namespace BiliSpirit.ViewModels
 
             await LoadHelper.DynamicLoad(DispatcherService, test.data.list, LiveList);
         }
+
+        public void JumpToLive(LiveList live)
+        {
+            ExpolerHelper.OuterVisit($"https://live.bilibili.com/{live.roomid}?broadcast_type=1");
+        }
     }
 }

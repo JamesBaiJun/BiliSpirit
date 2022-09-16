@@ -41,5 +41,15 @@ namespace BiliSpirit.ViewModels
 
             await LoadHelper.DynamicLoad(DispatcherService, test.data.list, HistoryList);
         }
+
+        public void JumpToHistory(HistoryList his)
+        {
+            if (his.history.business == "live")
+            {
+                ExpolerHelper.OuterVisit($"https://live.bilibili.com/{his.history.oid}");
+                return;
+            }
+            ExpolerHelper.OuterVisit($"https://www.bilibili.com/video/{his.history.bvid}");
+        }
     }
 }
