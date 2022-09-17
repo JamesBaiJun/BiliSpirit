@@ -10,6 +10,7 @@ using System.Net.Security;
 using System.Windows;
 using BiliSpirit.Models;
 using Newtonsoft.Json;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BiliSpirit.Common
 {
@@ -96,6 +97,55 @@ namespace BiliSpirit.Common
             });
         }
 
+        #region Get流
+        /// <summary>
+        /// 调用webapi通用方法(带参数)
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public async static Task<Stream> WebApiGetStreamAsync(string url, Dictionary<string, string> para)
+        {
+            return await Task.Run(() =>
+            {
+                Stream content = null;
+                StringBuilder parastr = new StringBuilder("?");
+                foreach (var item in para)
+                {
+                    parastr.Append(item.Key);
+                    parastr.Append("=");
+                    parastr.Append(item.Value);
+                    parastr.Append("&");
+                }
+
+                string paraResult = parastr.ToString().TrimEnd('&');
+
+                using (HttpClient httpclient = new HttpClient())
+                {
+                    HttpRequestMessage msg = new HttpRequestMessage();
+                    msg.Method = HttpMethod.Get;
+                    msg.RequestUri = new Uri(url + paraResult);
+                    if (SoftwareCache.CookieString != null)
+                    {
+                        msg.Headers.Add("Cookie", SoftwareCache.CookieString);//cookie:SESSDATA=***
+                        msg.Headers.Add("referer", "https://www.bilibili.com");//cookie:SESSDATA=***
+                        msg.Headers.Add("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1");//cookie:SESSDATA=***
+                    }
+
+                    try
+                    {
+                        var result = httpclient.SendAsync(msg, HttpCompletionOption.ResponseHeadersRead).Result;
+                        content = result.Content.ReadAsStreamAsync().Result;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"网络错误:{ex.Message}！", "提示");
+                    }
+                }
+                return content;
+            });
+        }
+
+        #endregion
         public async static Task<string> PostHttpAsync(string url, string body, string contentType)
         {
             return await Task.Run(() =>
@@ -126,14 +176,19 @@ namespace BiliSpirit.Common
         /// <summary>
         /// 获取视频的地址
         /// </summary>
-        public static async Task<VideoUrlInfo> GetVideoURL(string bvid, string cid)
+        public static async Task<Stream> GetVideoURL(string bvid, string cid)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
             data["bvid"] = bvid;
             data["cid"] = cid;
             string str = await WebApiGetAsync("http://api.bilibili.com/x/player/playurl", data);
             var url = JsonConvert.DeserializeObject<VideoUrlInfo>(str);
-            return url;
+
+            string urlStr = url.data.durl[0].url;
+
+            Dictionary<string, string> para = new Dictionary<string, string>();
+            var stream = await WebApiGetStreamAsync(urlStr, para);
+            return stream;
         }
     }
 }

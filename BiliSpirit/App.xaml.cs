@@ -8,6 +8,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Unosquare.FFME;
 
 namespace BiliSpirit
 {
@@ -20,6 +21,12 @@ namespace BiliSpirit
         {
             base.OnStartup(e);
             Login();
+            Library.FFmpegDirectory = @".\ffmpeg";
+            Library.LoadFFmpeg();
+            MediaElement.FFmpegMessageLogged += (s, ev) =>
+            {
+                System.Diagnostics.Debug.WriteLine(ev.Message);
+            };
         }
 
         private async void Login()

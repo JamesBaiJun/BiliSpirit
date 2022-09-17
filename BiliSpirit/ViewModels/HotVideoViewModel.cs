@@ -1,5 +1,6 @@
 ﻿using BiliSpirit.Common;
 using BiliSpirit.Models;
+using BiliSpirit.Windows;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.POCO;
@@ -7,6 +8,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,9 +49,35 @@ namespace BiliSpirit.ViewModels
 
         public async void JumpToVideo(VideoList video)
         {
-            VideoUrlInfo test = await WebApiRequest.GetVideoURL(video.bvid, video.cid);
+            var stream = await WebApiRequest.GetVideoURL(video.bvid, video.cid);
 
+            var videoStream = new FFMEMediaStream(stream);
+            PlayerWindow player = new PlayerWindow()
+            {
+                VideoAdress = videoStream,
+            };
+
+            player.Show();
             //ExpolerHelper.OuterVisit(video.short_link);
+            //byte[] bytes = new byte[stream.Length];
+
+            //stream.Read(bytes, 0, bytes.Length);
+
+            //// 设置当前流的位置为流的开始
+
+            //stream.Seek(0, SeekOrigin.Begin);
+
+            //// 把 byte[] 写入文件
+
+            //FileStream fs = new FileStream("D:\\abc.flv", FileMode.Create);
+
+            //BinaryWriter bw = new BinaryWriter(fs);
+
+            //bw.Write(bytes);
+
+            //bw.Close();
+
+            //fs.Close();
         }
     }
 }
