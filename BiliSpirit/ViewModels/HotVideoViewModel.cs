@@ -49,15 +49,12 @@ namespace BiliSpirit.ViewModels
 
         public async void JumpToVideo(VideoList video)
         {
-            var stream = await WebApiRequest.GetVideoURL(video.bvid, video.cid);
+            var stream = await WebApiRequest.GetVideoURL(video.bvid, video.cid, "1080P");
 
             var videoStream = new FFMEMediaStream(stream);
-            PlayerWindow player = new PlayerWindow()
-            {
-                VideoAdress = videoStream,
-            };
-
+            PlayerWindow player = new PlayerWindow(videoStream);
             player.Show();
+
             //ExpolerHelper.OuterVisit(video.short_link);
             //byte[] bytes = new byte[stream.Length];
 

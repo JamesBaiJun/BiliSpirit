@@ -16,6 +16,14 @@ namespace BiliSpirit.Common
 {
     public class WebApiRequest
     {
+        static WebApiRequest()
+        {
+            qnList["720P"] = "64";
+            qnList["720P60"] = "74";
+            qnList["1080P"] = "80";
+            qnList["1080P+"] = "112";
+            qnList["4K"] = "120";
+        }
 
         /// <summary>
         /// 调用webapi通用方法(带Cookie)
@@ -173,14 +181,21 @@ namespace BiliSpirit.Common
             });
         }
 
+        static Dictionary<string, string> qnList = new Dictionary<string, string>();
+
         /// <summary>
-        /// 获取视频的地址
+        /// 获取视频流
         /// </summary>
-        public static async Task<Stream> GetVideoURL(string bvid, string cid)
+        public static async Task<Stream> GetVideoURL(string bvid, string cid, string qn = null)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
             data["bvid"] = bvid;
             data["cid"] = cid;
+            if (!string.IsNullOrEmpty(qn))
+            {
+                data["qn"] = qnList[qn];
+            }
+
             string str = await WebApiGetAsync("http://api.bilibili.com/x/player/playurl", data);
             var url = JsonConvert.DeserializeObject<VideoUrlInfo>(str);
 

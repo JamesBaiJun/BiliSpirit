@@ -21,19 +21,20 @@ namespace BiliSpirit.Windows
     /// </summary>
     public partial class PlayerWindow : Window
     {
-        public PlayerWindow()
+        public PlayerWindow(IMediaInputStream stream)
         {
             InitializeComponent();
+            VideoStream = stream;
             Loaded += PlayerWindow_Loaded;
         }
 
         private async void PlayerWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //await Media.Open(new Uri(VideoAdress));
-            await Media.Open(VideoAdress);
+            await Media.Open(VideoStream);
             Media.Play();
         }
 
-        public IMediaInputStream VideoAdress { get; set; }
+        public IMediaInputStream VideoStream { get; set; }
     }
 }
