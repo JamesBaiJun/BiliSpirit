@@ -143,14 +143,14 @@
                         </Setter>
                     </Style>
                 </StackPanel.Resources>
-                <RadioButton x:Name="recomRad" Checked="{DXEvent Handler='Navigate(`推荐`)'}">
+                <RadioButton x:Name="recomRad" Checked="{DXEvent Handler='Navigate(`推荐`)'}" Click="Button_Click">
                     <StackPanel Orientation="Horizontal">
                         <icon:PackIconMaterial Kind="Film"  Width="12"/>
                         <TextBlock Text="推荐" Margin="4 0 0 0"/>
                     </StackPanel>
                 </RadioButton>
                 <Grid>
-                    <RadioButton x:Name="dynaRad" Checked="{DXEvent Handler='Navigate(`动态`)'}">
+                    <RadioButton x:Name="dynaRad" Checked="{DXEvent Handler='Navigate(`动态`)'}" Click="Button_Click">
                         <StackPanel Orientation="Horizontal">
                             <icon:PackIconMaterial Kind="Fan"  Width="12"/>
                             <TextBlock Text="动态" Margin="4 0 0 0"/>

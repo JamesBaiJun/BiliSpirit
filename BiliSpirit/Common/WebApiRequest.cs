@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Security;
 using System.Windows;
+using BiliSpirit.Models;
+using Newtonsoft.Json;
 
 namespace BiliSpirit.Common
 {
@@ -119,6 +121,19 @@ namespace BiliSpirit.Common
 
                 return responseContent;
             });
+        }
+
+        /// <summary>
+        /// 获取视频的地址
+        /// </summary>
+        public static async Task<VideoUrlInfo> GetVideoURL(string bvid, string cid)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data["bvid"] = bvid;
+            data["cid"] = cid;
+            string str = await WebApiGetAsync("http://api.bilibili.com/x/player/playurl", data);
+            var url = JsonConvert.DeserializeObject<VideoUrlInfo>(str);
+            return url;
         }
     }
 }

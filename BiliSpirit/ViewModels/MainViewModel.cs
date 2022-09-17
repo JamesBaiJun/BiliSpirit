@@ -62,7 +62,7 @@ namespace BiliSpirit.ViewModels
 
             };
 
-            Navigate("动态");
+            Navigate("热门");
 
             Timer timer = new Timer();
             timer.Interval = 20000;

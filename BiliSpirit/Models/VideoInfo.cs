@@ -39,7 +39,7 @@ namespace BiliSpirit.Models
         public Owner owner { get; set; }
         public Stat stat { get; set; }
         public string dynamic { get; set; }
-        public int cid { get; set; }
+        public string cid { get; set; }
         public Dimension dimension { get; set; }
         public string short_link { get; set; }
         public string short_link_v2 { get; set; }

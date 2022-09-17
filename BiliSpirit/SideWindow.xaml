@@ -19,7 +19,7 @@
         <dxmvvm:DispatcherService />
     </dxmvvm:Interaction.Behaviors>
     <Grid>
-        <Border CornerRadius="8" Padding="4 12" Background="White" Margin="0 12" BorderThickness="1" BorderBrush="{StaticResource PrimaryPinkColor}">
+        <Border Padding="4 12" Background="#464646" BorderThickness="1" BorderBrush="{StaticResource PrimaryTextGrayColor}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -40,13 +40,13 @@
                         <ItemsControl Margin="0" ItemsSource="{Binding HotVideoList}" >
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border x:Name="bd" Margin="4" Width="150" Height="94" CornerRadius="4" Effect="{StaticResource BorderShadow}" BorderBrush="LightGray"
+                                    <Border x:Name="bd" Margin="4" Width="150" Height="94" CornerRadius="4" BorderBrush="LightGray"
                                             MouseLeftButtonDown="{DXEvent Handler='@a($Window).DataContext.JumpToVideo(@sender.DataContext)'}">
                                         <Grid>
                                             <Image ToolTip="{Binding title}" Source="{Binding pic, Converter={StaticResource imageConverter200Zip}}" 
                                                    RenderOptions.BitmapScalingMode="Fant" com:ImageRadius.CornerRadius="4"/>
 
-                                            <Border Background="#BB595959" CornerRadius="4" VerticalAlignment="Bottom">
+                                            <Border Background="#BB595959" CornerRadius="0 0 4 4" VerticalAlignment="Bottom">
                                                 <TextBlock Text="{Binding owner.name}" VerticalAlignment="Bottom" Margin="4" Foreground="White"/>
                                             </Border>
 
