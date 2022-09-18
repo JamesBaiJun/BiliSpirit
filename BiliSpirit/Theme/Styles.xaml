@@ -27,7 +27,7 @@
         <Setter Property="Width" Value="22" />
         <Setter Property="Height" Value="22" />
         <Setter Property="Margin" Value="4 0 0 0" />
-        <Setter Property="Foreground" Value="{StaticResource PrimaryTextGrayColor}" />
+        <Setter Property="Foreground" Value="LightGray" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -421,4 +421,58 @@
     <Style TargetType="ScrollViewer" BasedOn="{StaticResource for_scrollviewer}"/>
     <!--#endregion-->
 
+    <!--#region Slider -->
+    <Style TargetType="{x:Type Thumb}" x:Key="SliderThumbStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Ellipse Width="15" Height="15" Fill="{StaticResource PrimaryPinkColor}" Margin="-1" Effect="{StaticResource BorderShadow}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="RepeatButton" x:Key="Slider_DecreaseRepeatBtnStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RepeatButton">
+                    <Border Background="{StaticResource PrimaryBlueColor}" 
+                            BorderThickness="0" CornerRadius="2 0 0 2" Height="5"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type Slider}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid>
+                        <Border Name="PART_Border" BorderBrush="{StaticResource PrimaryTextGrayColor}" BorderThickness="0" CornerRadius="2"
+                                    Padding="2" Width="{TemplateBinding Width}" Height="5" Background="LightGray" 
+                                    HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                        </Border>
+                        <Track Name="PART_Track">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Style="{StaticResource Slider_DecreaseRepeatBtnStyle}">
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb x:Name="thumb" Style="{StaticResource SliderThumbStyle}" />
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Visibility" TargetName="thumb" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" TargetName="thumb" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <!--#endregion-->
 </ResourceDictionary>

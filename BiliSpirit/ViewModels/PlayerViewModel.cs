@@ -1,4 +1,5 @@
-﻿using DevExpress.Mvvm.DataAnnotations;
+﻿using BiliSpirit.Models;
+using DevExpress.Mvvm.DataAnnotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,9 @@ namespace BiliSpirit.ViewModels
     {
         public PlayerViewModel()
         {
-
         }
+
+        public virtual VideoUrlInfo Info { get; set; }
         public virtual TimeSpan? CurrentTime { get; set; }
         public virtual TimeSpan? FileDuration { get; set; }
         public virtual double CurrentProgress { get; set; }
@@ -23,6 +25,7 @@ namespace BiliSpirit.ViewModels
         public void Loaded(MediaElement media)
         {
             MediaPlayer = media;
+            FileDuration = TimeSpan.FromMilliseconds(Info.data.timelength);
             MediaPlayer.RenderingVideo += MediaPlayer_RenderingVideo;
         }
 
@@ -31,6 +34,12 @@ namespace BiliSpirit.ViewModels
             //刷新当前时间
             CurrentTime = MediaPlayer.ActualPosition;
             CurrentProgress = (double)(MediaPlayer.ActualPosition?.TotalSeconds / FileDuration?.TotalSeconds);
+        }
+
+        public void ChangePostion(double proce)
+        {
+            var targetPos = (double)FileDuration?.TotalMilliseconds * proce;
+            MediaPlayer.Position = TimeSpan.FromMilliseconds(targetPos);
         }
     }
 }

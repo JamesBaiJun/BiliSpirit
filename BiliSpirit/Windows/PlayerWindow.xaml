@@ -10,6 +10,7 @@
         xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
         mc:Ignorable="d"
         Loaded="{DXEvent Handler='Loaded(@e(Media))'}"
+        FontFamily="{StaticResource YuanTi}"
         Title="PlayerWindow" Height="450" Width="800" DataContext="{dxmvvm:ViewModelSource Type=vm:PlayerViewModel}">
     <Grid Background="Black">
         <Grid>
@@ -21,39 +22,40 @@
         <ffme:MediaElement Grid.RowSpan="2" x:Name="Media" LoadedBehavior="Play" UnloadedBehavior="Close">
         </ffme:MediaElement>
 
-        <Grid Grid.Row="1" Height="80" Background="#58000000" ShowGridLines="False" VerticalAlignment="Bottom">
+        <Grid Grid.Row="1" Height="90" Background="#A3303030" VerticalAlignment="Bottom">
             <Grid.RowDefinitions>
                 <RowDefinition/>
-                <RowDefinition Height="1.6*"/>
+                <RowDefinition Height="1.2*"/>
             </Grid.RowDefinitions>
 
             <DockPanel VerticalAlignment="Center" Margin="16 0">
-                <TextBlock Foreground="White" Text="{Binding CurrentTime, StringFormat=hh\\:mm\\:ss}" DockPanel.Dock="Left"/>
-                <TextBlock Foreground="White" Text="{Binding FileDuration, StringFormat=hh\\:mm\\:ss}" DockPanel.Dock="Right"/>
+                <TextBlock Foreground="White" VerticalAlignment="Center" Text="{Binding CurrentTime, StringFormat=hh\\:mm\\:ss}" DockPanel.Dock="Left"/>
+                <TextBlock Foreground="White" VerticalAlignment="Center" Text="{Binding FileDuration, StringFormat=hh\\:mm\\:ss}" DockPanel.Dock="Right"/>
                 <Grid>
-                    <Slider Margin="4 0" Value="{Binding CurrentProgress, Mode=OneWay}" IsEnabled="False" Maximum="1" Minimum="0" IsMoveToPointEnabled="True"/>
-                    <Slider Margin="4 0"  ValueChanged="{DXEvent Handler='ChangePostion(@sender.Value)'}" Maximum="1" Minimum="0" IsMoveToPointEnabled="True"/>
+                    <Slider Margin="6 2" Value="{Binding CurrentProgress, Mode=OneWay}" IsEnabled="False" Maximum="1" Minimum="0" IsMoveToPointEnabled="True"/>
                 </Grid>
             </DockPanel>
 
-            <DockPanel Grid.Row="1" LastChildFill="True" Margin="16 0" VerticalAlignment="Top">
-                <Slider DockPanel.Dock="Right" IsMoveToPointEnabled="True" 
-                            Value="{Binding ElementName=Media,Path=Volume}" Width="120" Maximum="1" VerticalAlignment="Center"/>
-                <icon:PackIconMaterial DockPanel.Dock="Right" Foreground="White" Kind="VolumeMedium" VerticalAlignment="Center"/>
+            <DockPanel Grid.Row="1" LastChildFill="True" Margin="16 0" VerticalAlignment="Center">
+                <Slider DockPanel.Dock="Right"
+                            Value="{Binding ElementName=Media,Path=Volume}" Width="120" Margin="0 4" Maximum="1" VerticalAlignment="Center"/>
+                
+                <icon:PackIconMaterial DockPanel.Dock="Right" Margin="0 0 4 0" Foreground="White" Kind="VolumeMedium" VerticalAlignment="Center"/>
 
-
-                <TextBlock Foreground="White" Text="{Binding ElementName=SpeedSlid,Path=Value,StringFormat={}{0:f1}x}" Margin="0 0 4 0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                <TextBlock Foreground="White" Text="{Binding ElementName=SpeedSlid,Path=Value,StringFormat={}{0:f1}x}" 
+                           Margin="0 0 4 0" DockPanel.Dock="Left" VerticalAlignment="Center"/>
+                
                 <Slider x:Name="SpeedSlid" DockPanel.Dock="Left" Value="{Binding ElementName=Media,Path=SpeedRatio}" 
-                            Width="120" Maximum="10" Minimum="1" IsMoveToPointEnabled="True" VerticalAlignment="Center"/>
+                            Width="120" Maximum="10" Minimum="1" VerticalAlignment="Center"/>
 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
-                    <Button Margin="8 0" Style="{StaticResource IconButton}"  Command="{DXCommand '@e(Media).Play()'}" Foreground="#ABFCFCFC">
+                    <Button Margin="8 0" Style="{StaticResource IconButton}"  Command="{DXCommand '@e(Media).Play()'}">
                         <icon:PackIconMaterial Kind="Play"/>
                     </Button>
-                    <Button Margin="8 0" Style="{StaticResource IconButton}" Command="{DXCommand '@e(Media).Pause()'}" Foreground="#ABFCFCFC">
+                    <Button Margin="8 0" Style="{StaticResource IconButton}" Command="{DXCommand '@e(Media).Pause()'}">
                         <icon:PackIconMaterial Kind="Pause"/>
                     </Button>
-                    <Button Margin="8 0" Style="{StaticResource IconButton}" Command="{DXCommand '@e(Media).Stop()'}" Foreground="#ABFCFCFC">
+                    <Button Margin="8 0" Style="{StaticResource IconButton}" Command="{DXCommand '@e(Media).Stop()'}">
                         <icon:PackIconMaterial Kind="Stop"/>
                     </Button>
                 </StackPanel>

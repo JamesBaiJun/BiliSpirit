@@ -11,6 +11,7 @@ using System.Windows;
 using BiliSpirit.Models;
 using Newtonsoft.Json;
 using static System.Net.Mime.MediaTypeNames;
+using System.Security.Policy;
 
 namespace BiliSpirit.Common
 {
@@ -184,9 +185,9 @@ namespace BiliSpirit.Common
         static Dictionary<string, string> qnList = new Dictionary<string, string>();
 
         /// <summary>
-        /// 获取视频流
+        /// 获取视频信息
         /// </summary>
-        public static async Task<Stream> GetVideoURL(string bvid, string cid, string qn = null)
+        public static async Task<VideoUrlInfo> GetVideoURL(string bvid, string cid, string qn = null)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
             data["bvid"] = bvid;
@@ -199,10 +200,20 @@ namespace BiliSpirit.Common
             string str = await WebApiGetAsync("http://api.bilibili.com/x/player/playurl", data);
             var url = JsonConvert.DeserializeObject<VideoUrlInfo>(str);
 
-            string urlStr = url.data.durl[0].url;
+            
+            return url;
+        }
+
+        /// <summary>
+        /// 获取视频流
+        /// </summary>
+        public static async Task<Stream> GetVideoStream(string url)
+        {
+            string urlStr = url;
 
             Dictionary<string, string> para = new Dictionary<string, string>();
             var stream = await WebApiGetStreamAsync(urlStr, para);
+
             return stream;
         }
     }
