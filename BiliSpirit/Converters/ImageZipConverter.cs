@@ -18,6 +18,10 @@ namespace BiliSpirit.Converters
         {
             if (value is string str)
             {
+                if (string.IsNullOrEmpty(str))
+                {
+                    return null;
+                }
                 var bitmapImage = new BitmapImage();
                 bitmapImage.BeginInit();
                 bitmapImage.CacheOption = BitmapCacheOption.OnLoad;

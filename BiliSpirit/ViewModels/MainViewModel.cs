@@ -224,7 +224,10 @@ namespace BiliSpirit.ViewModels
             data["jsonp"] = "jsonp";
             string str = await WebApiRequest.WebApiGetAsync("https://api.bilibili.com/x/space/acc/info", data);
             var spaceInfo = JsonConvert.DeserializeObject<SpaceInfo>(str);
-            TopImage = spaceInfo.data.top_photo;
+            if (spaceInfo.data != null)
+            {
+                TopImage = spaceInfo.data.top_photo;
+            }
         }
         #endregion
 

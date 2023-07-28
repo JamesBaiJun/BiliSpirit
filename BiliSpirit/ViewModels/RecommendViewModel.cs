@@ -26,7 +26,7 @@ namespace BiliSpirit.ViewModels
         {
             await GetAllDynamic();
         }
-
+            
         public async void RefreshContent()
         {
             await GetAllDynamic();
