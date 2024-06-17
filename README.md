@@ -18,8 +18,7 @@
 > * **程序支持置顶自动收起和侧边栏模式** 
 > * **程序当前仅为初步测试版本，可以在Release中下载已编译的版本** 
 > * **通过扫码登录获取的Cookie数据保存于程序路径下的Cookie.txt，删除该文件即可重新登录** 
-## 🚀 协作
-如果对此感兴趣，您也可以参与这个项目，一起玩儿！
+
 ## 🧩 截图
 <p align="center">
 <img src="https://github.com/JamesBaiJun/BiliSpirit/blob/master/BiliSpirit/image/Snipaste_1.png"/>
